@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Removing the legally protected attributes from COMPAS. Split ratios and hyperparameters are unchanged; only \texttt{sex\_*} and \texttt{race\_*} are dropped, leaving 7 instead of 13 inputs. Values are $5\times5$ cross-validated test accuracy and $\Delta$ is the paired per-fold difference to the strongest baseline.}
+\label{tab:protected_ablation}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l l r c l c c}
+\toprule
+\textbf{Feature set} & \textbf{Variant} & \textbf{$N$} & \textbf{CV Acc (\%)} & \textbf{Best baseline} & \textbf{$\Delta$ (pp)} & \textbf{Folds} \\
+\midrule
+All features & Global Best & 13 & 67.56$\pm$1.49 & CatBoost & -0.38 & 9/25 \\
+All features & Compact & 13 & 66.81$\pm$1.66 & CatBoost & -1.13 & 5/25 \\
+No sex/race & Global Best & 7 & 67.67$\pm$1.35 & EBM (InterpretML) & -0.43 & 3/25 \\
+No sex/race & Compact & 7 & 65.62$\pm$2.42 & EBM (InterpretML) & -2.47 & 2/25 \\
+\bottomrule
+\end{tabular}
+\end{table}

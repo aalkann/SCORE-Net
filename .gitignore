@@ -1,0 +1,48 @@
+# Python
+*.pyc
+__pycache__/
+*.egg-info/
+.ipynb_checkpoints/
+
+# LaTeX build products (PDFs of the manuscript are committed on purpose)
+paper/ieee/main.aux
+paper/ieee/main.blg
+paper/ieee/main.brf
+paper/ieee/main.fls
+paper/ieee/main.fdb_latexmk
+paper/ieee/main.log
+paper/ieee/main.out
+paper/ieee/main.synctex.gz
+paper/ieee/main.toc
+paper/neurocomputing/main.aux
+paper/neurocomputing/main.blg
+paper/neurocomputing/main.brf
+paper/neurocomputing/main.fls
+paper/neurocomputing/main.fdb_latexmk
+paper/neurocomputing/main.log
+paper/neurocomputing/main.out
+paper/neurocomputing/main.toc
+paper/neurocomputing/build.log
+paper/neurocomputing/suppbuild.log
+paper/neurocomputing/supplementary.aux
+paper/neurocomputing/supplementary.blg
+paper/neurocomputing/supplementary.fls
+paper/neurocomputing/supplementary.fdb_latexmk
+paper/neurocomputing/supplementary.log
+paper/neurocomputing/supplementary.out
+paper/neurocomputing/supplementary.spl
+paper/neurocomputing/supplementary.synctex.gz
+paper/neurocomputing/submission/flat/
+
+# NOTE: results/*.csv, results/predictions/*.npz and training_history*.json are
+# intentionally version-controlled. They are the evidence behind every number in
+# the manuscript, and the figure/table notebooks cannot run without them.
+# Regenerate with:  python scripts/run_baselines.py  /  python scripts/run_cv.py
+
+# CatBoost runtime logs (written by baseline fits)
+catboost_info/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

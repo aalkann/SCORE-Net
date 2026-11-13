@@ -1,0 +1,51 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this paper we introduced \modelname{}, an inherently interpretable neural
+network for tabular classification. High-stakes applications in medicine, finance
+and criminal justice require models that are both reasonably accurate and
+auditable, and \modelname{} addresses this trade-off geometrically: instead of
+unbounded activations such as ReLU, each hidden unit applies a localized
+triangular response to a bias-free linear projection. The unit is therefore active
+only inside a convex slab bounded by two parallel hyperplanes, and it can be read
+as an oblique interval rule with a signed vote per class.
+
+To keep the rule set compact, we combine dual $\ell_1$ regularization with
+iterative magnitude pruning. Pruning is a structural mechanism rather than only
+compression: zeroing input connections removes features from a rule, and zeroing
+an entire row removes the rule. We proved the \emph{exact bias-shifting property
+for pruned rules} (Proposition~\ref{prop:bias_shifting}), so a structurally empty
+rule can be absorbed into the output bias with zero logit drift; without the
+correction, naive removal costs up to 9.01 accuracy points. Rule-adaptive integer
+quantization then converts projection weights into small integers, so compact rule
+sets can be scored by hand while the output layer remains continuous and
+interpretable as signed votes.
+
+The empirical results support a bounded claim. On the single split, the COMPAS
+(Global Best) and German Credit models are statistically indistinguishable from
+the strongest of 13 baselines. Under the shared folds the German Credit gap is
+2.8--3.1 points, and on UCI Adult the models trail the best gradient-boosted
+ensemble by 1.52--1.85 points. The interpretable operating point uses 5 rules on
+COMPAS, 46 on German Credit and 43 on Adult, with 1.2--2.7 features per rule. On
+the 20-class synthetic task the localized-slab representation is much stronger
+than tree ensembles, but that benchmark was generated from localized geometry and
+should be read as a controlled demonstration rather than as evidence of general
+superiority. Integer scorecards retain 95.45--100\% prediction agreement.
+
+Several questions remain open. The architecture targets tabular classification, and
+extending convex slabs to regression, survival analysis or unstructured data is
+future work. Rules that combine three or more variables require more cognitive
+effort than univariate thresholds, and a low rule count alone is not sufficient
+for auditability, as the dense German Credit Global Best checkpoint illustrates.
+Rule stability is the most important open issue: across five seeds the feature
+support is nearly stable (Jaccard $0.91$--$1.00$) but individual rule signatures
+are not ($0.02$--$0.13$), and the compact model reduces COMPAS to about five rules
+per run with mean rule-set overlap $0.38 \pm 0.15$. A reported rule is therefore
+one member of a family of equally accurate rules rather than a uniquely determined
+explanation, which makes stability-aware pruning the natural next step. Iterative
+pruning also increases offline training time, although deployment cost remains
+low. Finally, a transparent model is not automatically a fair model: we do not
+evaluate group fairness on COMPAS, and human auditing of proxy attributes remains
+essential. Promising directions include causal constraints for recourse,
+stability-aware pruning objectives, and compiling quantized scorecards into
+low-power edge firmware.

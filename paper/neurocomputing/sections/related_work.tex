@@ -1,0 +1,88 @@
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{Inherently Interpretable Tabular Models}
+\label{subsec:related_interpretable}
+
+Inherently interpretable (glass-box) models expose their decision logic without a
+separate post-hoc explainer~\cite{rudin2019stop}; reviews of the tabular setting
+\cite{obrien2024explainable} and of how such explanations are evaluated
+\cite{nauta2023evaluating} give broader context.
+
+\textbf{Linear and generalized linear models.} Linear and logistic regression are
+among the oldest interpretable models, and each coefficient reads as the marginal
+effect of a feature on the log-odds. They cannot represent non-linearities or
+interactions without manual feature engineering.
+
+\textbf{Decision trees and rule sets.} Trees and rule-based systems offer intuitive
+\emph{IF--THEN} rules~\cite{wang2017bayesian,friedman2008predictive}, but reaching
+competitive accuracy requires deep trees that are hard to follow, and axis-aligned
+splits handle diagonal or correlated boundaries poorly.
+
+\textbf{Generalized additive models.} GAMs decompose predictions into univariate
+shape functions, $g(E[Y]) = \beta_0 + \sum f_i(x_i)$. Explainable Boosting
+Machines~\cite{lou2012intelligible,caruana2015intelligible} add pairwise
+interactions by shallow tree boosting, and Neural Additive
+Models~\cite{agarwal2021neural} model each shape function with a small network.
+Their cost grows sharply with many correlated features, many classes, and
+higher-order interactions.
+
+\subsection{Neural Rule Representations and Localized Activations}
+\label{subsec:related_neural_rules}
+
+Prototype networks~\cite{chen2019looks} and Radial Basis Function (RBF) networks
+activate hidden units through distance-based centroids. Standard RBFs use isotropic
+Euclidean distances that decay smoothly, so every neuron stays slightly active
+everywhere. Piecewise-linear, compact-support activations instead drop to exactly
+zero outside a defined region. Localized triangular (tent) activations suit such
+units, but they have rarely been combined with bias-free projections and structural
+pruning to extract discrete rule sets for tabular data. Sparse tabular neural
+networks pursue a related goal with different mechanisms~\cite{raieli2026escaping}.
+\modelname{} uses this geometry so that each neuron isolates a \emph{convex slab},
+an explicit interval condition rather than an unbounded response.
+
+\subsection{Neural Network Pruning and Structural Sparsity}
+\label{subsec:related_pruning}
+
+Neural network pruning was originally developed to compress large models and reduce memory and latency on hardware accelerators~\cite{han2015learning}. The Lottery Ticket Hypothesis by Frankle and Carbin~\cite{frankle2018lottery} demonstrated that dense, randomly initialized neural networks contain sparse sub-networks (``winning tickets'') that can reach comparable test accuracy when trained in isolation.
+
+In \modelname{}, we use Iterative Magnitude Pruning (IMP) not only to compress the model but as a \emph{semantic sparsification mechanism}. In our architecture, setting an input connection $W_{f,hj}$ to zero directly removes feature $j$ from rule $h$, which shortens the rule. Also, when all input connections to a neuron are zeroed, the whole rule becomes inactive. Unlike conventional pruning pipelines that discard pruned units heuristically, we give a formal statement---the \emph{exact bias shifting for pruned rules}---which guarantees that disconnected rules can be absorbed into the output bias without altering model outputs.
+
+\subsection{Scoring Systems and Integer Scorecards}
+\label{subsec:related_scorecards}
+
+Point-based scoring systems (scorecards) have been used for decades in medicine (e.g., the CHADS$_2$ score for stroke risk~\cite{gage2001validation}) and finance (e.g., credit bureau scorecards~\cite{hlongwane2024transparency}). In a scorecard, integer points are assigned to specific conditions, and the user simply adds the points together to obtain a risk category.
+
+Modern methods such as Supersparse Linear Integer Models (SLIM)~\cite{ustun2016supersparse} and RiskSLIM~\cite{ustun2017optimized}, which has been applied to recidivism prediction~\cite{zeng2017interpretable}, train scorecards as a discrete optimization problem using Mixed-Integer Non-Linear Programming (MINLP). These methods produce provably optimal and highly sparse scorecards, but solving MINLP is NP-hard. As a result, training becomes very slow on datasets with many samples, many features, or multi-class targets. \modelname{} avoids this bottleneck by first training the continuous model with standard gradient descent and iterative pruning, and then converting the resulting compact rules into an integer scorecard via rule-adaptive scaling. The resulting prediction agreement is high but empirical rather than exact, and it is measured on the test partition. The recourse tool is likewise geometric rather than causal, a distinction that the counterfactual literature emphasizes~\cite{verma2024counterfactual}.
+
+\subsection{Post-Hoc Explanations vs. Inherently Interpretable Models}
+\label{subsec:related_posthoc}
+
+Post-hoc explainability methods, particularly SHAP~\cite{lundberg2017unified} and LIME~\cite{ribeiro2016why}, have become a common way to explain black-box models. These tools build local surrogate models around individual predictions to estimate feature attributions.
+
+Despite their popularity, post-hoc methods have fundamental limitations in
+high-stakes domains~\cite{rudin2019stop}. They explain an approximation of the
+model rather than its decision logic, so a diverging surrogate can mislead.
+Estimating Shapley values is computationally expensive, and sampling-based
+perturbations generate out-of-distribution points that distort attributions; the
+same concern motivates dedicated evaluation protocols~\cite{nauta2023evaluating}.
+Finally, some explainers can be fooled by adversarial wrappers that change the
+explanation without changing the prediction~\cite{slack2020fooling}.
+
+These limitations motivate inherently interpretable models such as \modelname{},
+whose explanations are derived analytically from the model parameters.
+
+\subsection{Positioning \modelname{} in the Literature}
+\label{subsec:related_positioning}
+
+Localized activations, magnitude pruning and integer scorecards all exist in
+isolation. \modelname{} combines them so that the combination, rather than any
+single component, carries the interpretability claim: bias-free projections with
+triangular activations yield bounded convex-slab rules; pruning is semantic rather
+than merely compressive and is backed by exact bias shifting; post-training
+quantization produces integer scorecards without discrete optimization; and
+decision decomposition, feature influence and recourse are available in closed
+form. Relative to linear scorecards and GAMs, the representation is piecewise
+linear and oblique, which is what allows it to cover localized non-axis-aligned
+regions; relative to tree ensembles and deep networks, it exposes each decision as
+a small number of signed rule votes rather than a surrogate explanation.

@@ -1,0 +1,326 @@
+dataset,model,family,repeat,fold,n_train,n_val,n_test,test_accuracy,test_f1_macro,elapsed_s
+german,Logistic Regression,Interpretable,0,0,640,160,200,75.5,67.11299036880433,0.01
+german,Decision Tree,Interpretable,0,0,640,160,200,67.0,50.27124773960217,0.0
+german,EBM (InterpretML),Interpretable,0,0,640,160,200,75.5,69.4504192774089,14.68
+german,Naive Bayes,Interpretable,0,0,640,160,200,53.5,53.47091932457786,0.0
+german,XGBoost,SOTA Ensemble,0,0,640,160,200,76.0,68.41689696012634,0.17
+german,LightGBM,SOTA Ensemble,0,0,640,160,200,73.0,66.51785714285714,0.03
+german,CatBoost,SOTA Ensemble,0,0,640,160,200,79.0,71.61778618732261,0.9
+german,Random Forest,SOTA Ensemble,0,0,640,160,200,77.5,67.99317187666702,0.35
+german,Gradient Boosting,SOTA Ensemble,0,0,640,160,200,75.5,67.54859432431537,0.16
+german,AdaBoost,SOTA Ensemble,0,0,640,160,200,76.0,69.19522525991528,0.74
+german,SVM (RBF),Geometric & DL,0,0,640,160,200,78.0,70.26625219624275,0.02
+german,KNN,Geometric & DL,0,0,640,160,200,75.5,62.07283563605402,0.02
+german,MLP (sklearn),Geometric & DL,0,0,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,0,1,640,160,200,78.0,68.94409937888199,0.01
+german,Decision Tree,Interpretable,0,1,640,160,200,70.0,45.56341861731084,0.0
+german,EBM (InterpretML),Interpretable,0,1,640,160,200,78.5,73.76048817696415,11.54
+german,Naive Bayes,Interpretable,0,1,640,160,200,74.0,70.60153776571687,0.0
+german,XGBoost,SOTA Ensemble,0,1,640,160,200,76.5,69.65294592413235,0.03
+german,LightGBM,SOTA Ensemble,0,1,640,160,200,76.5,69.27200810695958,0.03
+german,CatBoost,SOTA Ensemble,0,1,640,160,200,76.0,67.10526315789474,0.89
+german,Random Forest,SOTA Ensemble,0,1,640,160,200,74.5,61.232944395880054,0.36
+german,Gradient Boosting,SOTA Ensemble,0,1,640,160,200,76.5,67.55823986194996,0.16
+german,AdaBoost,SOTA Ensemble,0,1,640,160,200,78.0,71.04882221344914,0.81
+german,SVM (RBF),Geometric & DL,0,1,640,160,200,77.0,67.02508960573476,0.02
+german,KNN,Geometric & DL,0,1,640,160,200,73.0,54.268292682926834,0.01
+german,MLP (sklearn),Geometric & DL,0,1,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,0,2,640,160,200,75.5,67.11299036880433,0.02
+german,Decision Tree,Interpretable,0,2,640,160,200,69.0,63.095238095238095,0.0
+german,EBM (InterpretML),Interpretable,0,2,640,160,200,75.0,66.66666666666667,13.19
+german,Naive Bayes,Interpretable,0,2,640,160,200,67.0,63.969865705863086,0.0
+german,XGBoost,SOTA Ensemble,0,2,640,160,200,72.5,63.57495281300706,0.03
+german,LightGBM,SOTA Ensemble,0,2,640,160,200,71.5,63.19612590799032,0.03
+german,CatBoost,SOTA Ensemble,0,2,640,160,200,76.5,66.57064618229667,0.91
+german,Random Forest,SOTA Ensemble,0,2,640,160,200,75.5,64.01160442143146,0.38
+german,Gradient Boosting,SOTA Ensemble,0,2,640,160,200,72.5,62.573576945323396,0.17
+german,AdaBoost,SOTA Ensemble,0,2,640,160,200,73.5,64.42833652135977,0.81
+german,SVM (RBF),Geometric & DL,0,2,640,160,200,75.0,65.23432067862606,0.02
+german,KNN,Geometric & DL,0,2,640,160,200,75.0,61.65055990182544,0.01
+german,MLP (sklearn),Geometric & DL,0,2,640,160,200,71.5,55.880645535817955,0.09
+german,Logistic Regression,Interpretable,0,3,640,160,200,71.0,60.805514258683615,0.01
+german,Decision Tree,Interpretable,0,3,640,160,200,75.0,60.18474279343845,0.0
+german,EBM (InterpretML),Interpretable,0,3,640,160,200,73.0,66.87523003312477,13.58
+german,Naive Bayes,Interpretable,0,3,640,160,200,54.50000000000001,54.361944883271896,0.0
+german,XGBoost,SOTA Ensemble,0,3,640,160,200,73.0,64.0,0.02
+german,LightGBM,SOTA Ensemble,0,3,640,160,200,72.5,65.32047038052902,0.03
+german,CatBoost,SOTA Ensemble,0,3,640,160,200,75.0,66.66666666666667,0.87
+german,Random Forest,SOTA Ensemble,0,3,640,160,200,74.0,62.72401433691756,0.34
+german,Gradient Boosting,SOTA Ensemble,0,3,640,160,200,75.0,67.51559251559252,0.17
+german,AdaBoost,SOTA Ensemble,0,3,640,160,200,72.5,62.036238136324414,0.85
+german,SVM (RBF),Geometric & DL,0,3,640,160,200,73.0,62.45306633291614,0.03
+german,KNN,Geometric & DL,0,3,640,160,200,72.0,57.80590717299579,0.01
+german,MLP (sklearn),Geometric & DL,0,3,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,0,4,640,160,200,78.5,70.73934197543466,0.02
+german,Decision Tree,Interpretable,0,4,640,160,200,67.0,56.57323332017371,0.01
+german,EBM (InterpretML),Interpretable,0,4,640,160,200,73.0,66.87523003312477,11.84
+german,Naive Bayes,Interpretable,0,4,640,160,200,75.5,72.80119896755572,0.0
+german,XGBoost,SOTA Ensemble,0,4,640,160,200,76.0,68.41689696012634,0.02
+german,LightGBM,SOTA Ensemble,0,4,640,160,200,74.0,67.39811912225704,0.03
+german,CatBoost,SOTA Ensemble,0,4,640,160,200,75.5,66.17773943054357,0.88
+german,Random Forest,SOTA Ensemble,0,4,640,160,200,78.5,68.92951334947072,0.36
+german,Gradient Boosting,SOTA Ensemble,0,4,640,160,200,79.5,72.8467830060598,0.19
+german,AdaBoost,SOTA Ensemble,0,4,640,160,200,76.5,68.0174202987309,0.92
+german,SVM (RBF),Geometric & DL,0,4,640,160,200,77.5,68.93874029335633,0.03
+german,KNN,Geometric & DL,0,4,640,160,200,74.5,59.77759375369691,0.01
+german,MLP (sklearn),Geometric & DL,0,4,640,160,200,69.5,42.53685648344402,0.07
+german,Logistic Regression,Interpretable,1,0,640,160,200,74.0,64.3640350877193,0.02
+german,Decision Tree,Interpretable,1,0,640,160,200,68.5,55.86844593884628,0.01
+german,EBM (InterpretML),Interpretable,1,0,640,160,200,79.0,73.04582210242587,12.55
+german,Naive Bayes,Interpretable,1,0,640,160,200,51.5,51.48908504413493,0.0
+german,XGBoost,SOTA Ensemble,1,0,640,160,200,77.0,69.33333333333334,0.03
+german,LightGBM,SOTA Ensemble,1,0,640,160,200,72.5,65.70965429096917,0.03
+german,CatBoost,SOTA Ensemble,1,0,640,160,200,76.5,67.55823986194996,0.88
+german,Random Forest,SOTA Ensemble,1,0,640,160,200,76.5,67.07645966866309,0.36
+german,Gradient Boosting,SOTA Ensemble,1,0,640,160,200,76.5,68.87314149475148,0.2
+german,AdaBoost,SOTA Ensemble,1,0,640,160,200,74.5,65.29549862202715,0.94
+german,SVM (RBF),Geometric & DL,1,0,640,160,200,74.5,64.27445623620889,0.03
+german,KNN,Geometric & DL,1,0,640,160,200,71.0,54.6875,0.01
+german,MLP (sklearn),Geometric & DL,1,0,640,160,200,70.0,41.17647058823529,0.05
+german,Logistic Regression,Interpretable,1,1,640,160,200,75.0,64.70920383963862,0.02
+german,Decision Tree,Interpretable,1,1,640,160,200,65.5,56.492953750118225,0.0
+german,EBM (InterpretML),Interpretable,1,1,640,160,200,74.5,67.46515262671046,12.97
+german,Naive Bayes,Interpretable,1,1,640,160,200,70.0,67.82496782496783,0.0
+german,XGBoost,SOTA Ensemble,1,1,640,160,200,72.5,62.573576945323396,0.02
+german,LightGBM,SOTA Ensemble,1,1,640,160,200,73.5,65.77885391444713,0.02
+german,CatBoost,SOTA Ensemble,1,1,640,160,200,73.5,63.934537783675275,0.89
+german,Random Forest,SOTA Ensemble,1,1,640,160,200,73.0,59.3128390596745,0.37
+german,Gradient Boosting,SOTA Ensemble,1,1,640,160,200,76.0,65.59139784946237,0.17
+german,AdaBoost,SOTA Ensemble,1,1,640,160,200,75.0,63.578088578088575,0.85
+german,SVM (RBF),Geometric & DL,1,1,640,160,200,75.0,64.70920383963862,0.02
+german,KNN,Geometric & DL,1,1,640,160,200,75.0,60.18474279343845,0.01
+german,MLP (sklearn),Geometric & DL,1,1,640,160,200,70.5,44.420893975790115,0.08
+german,Logistic Regression,Interpretable,1,2,640,160,200,75.5,66.17773943054357,0.02
+german,Decision Tree,Interpretable,1,2,640,160,200,68.5,40.652818991097924,0.01
+german,EBM (InterpretML),Interpretable,1,2,640,160,200,77.0,71.47817460317461,12.54
+german,Naive Bayes,Interpretable,1,2,640,160,200,71.5,66.83636363636364,0.0
+german,XGBoost,SOTA Ensemble,1,2,640,160,200,75.5,68.74102899429045,0.02
+german,LightGBM,SOTA Ensemble,1,2,640,160,200,76.5,70.36476559790663,0.03
+german,CatBoost,SOTA Ensemble,1,2,640,160,200,78.0,70.66666666666667,0.98
+german,Random Forest,SOTA Ensemble,1,2,640,160,200,79.5,71.69974115616911,0.36
+german,Gradient Boosting,SOTA Ensemble,1,2,640,160,200,77.0,69.73285958678774,0.18
+german,AdaBoost,SOTA Ensemble,1,2,640,160,200,76.0,69.19522525991528,0.85
+german,SVM (RBF),Geometric & DL,1,2,640,160,200,77.0,68.47587719298247,0.03
+german,KNN,Geometric & DL,1,2,640,160,200,72.5,54.871794871794876,0.01
+german,MLP (sklearn),Geometric & DL,1,2,640,160,200,70.0,41.17647058823529,0.05
+german,Logistic Regression,Interpretable,1,3,640,160,200,75.5,66.65645946037904,0.02
+german,Decision Tree,Interpretable,1,3,640,160,200,69.5,60.11898924520283,0.01
+german,EBM (InterpretML),Interpretable,1,3,640,160,200,75.0,67.91169297907842,12.99
+german,Naive Bayes,Interpretable,1,3,640,160,200,71.5,67.39037157813439,0.0
+german,XGBoost,SOTA Ensemble,1,3,640,160,200,75.5,67.54859432431537,0.02
+german,LightGBM,SOTA Ensemble,1,3,640,160,200,73.5,66.1892762591305,0.03
+german,CatBoost,SOTA Ensemble,1,3,640,160,200,80.0,72.18745654290085,0.92
+german,Random Forest,SOTA Ensemble,1,3,640,160,200,75.0,63.578088578088575,0.37
+german,Gradient Boosting,SOTA Ensemble,1,3,640,160,200,76.5,68.0174202987309,0.19
+german,AdaBoost,SOTA Ensemble,1,3,640,160,200,75.0,66.66666666666667,0.9
+german,SVM (RBF),Geometric & DL,1,3,640,160,200,75.0,64.70920383963862,0.03
+german,KNN,Geometric & DL,1,3,640,160,200,74.5,58.98838004101161,0.01
+german,MLP (sklearn),Geometric & DL,1,3,640,160,200,71.0,48.61800141743445,0.08
+german,Logistic Regression,Interpretable,1,4,640,160,200,72.5,63.086009597637506,0.02
+german,Decision Tree,Interpretable,1,4,640,160,200,71.5,60.071451087527585,0.01
+german,EBM (InterpretML),Interpretable,1,4,640,160,200,75.5,69.10369179356222,12.38
+german,Naive Bayes,Interpretable,1,4,640,160,200,51.0,51.0,0.0
+german,XGBoost,SOTA Ensemble,1,4,640,160,200,75.0,67.51559251559252,0.02
+german,LightGBM,SOTA Ensemble,1,4,640,160,200,76.5,71.01538651290433,0.03
+german,CatBoost,SOTA Ensemble,1,4,640,160,200,75.5,67.54859432431537,0.95
+german,Random Forest,SOTA Ensemble,1,4,640,160,200,74.0,62.121212121212125,0.37
+german,Gradient Boosting,SOTA Ensemble,1,4,640,160,200,76.5,68.87314149475148,0.16
+german,AdaBoost,SOTA Ensemble,1,4,640,160,200,75.0,66.2116502230031,0.84
+german,SVM (RBF),Geometric & DL,1,4,640,160,200,74.0,63.84369350577111,0.02
+german,KNN,Geometric & DL,1,4,640,160,200,70.5,52.55518475332717,0.01
+german,MLP (sklearn),Geometric & DL,1,4,640,160,200,70.5,42.93727936553992,0.04
+german,Logistic Regression,Interpretable,2,0,640,160,200,71.0,59.67181198720623,0.02
+german,Decision Tree,Interpretable,2,0,640,160,200,67.0,52.68817204301075,0.01
+german,EBM (InterpretML),Interpretable,2,0,640,160,200,68.0,57.8891959468351,13.77
+german,Naive Bayes,Interpretable,2,0,640,160,200,68.0,63.81727725011307,0.0
+german,XGBoost,SOTA Ensemble,2,0,640,160,200,69.0,59.719334719334725,0.03
+german,LightGBM,SOTA Ensemble,2,0,640,160,200,69.0,60.67985794013191,0.03
+german,CatBoost,SOTA Ensemble,2,0,640,160,200,68.5,57.71670190274841,0.98
+german,Random Forest,SOTA Ensemble,2,0,640,160,200,69.0,56.89055764149632,0.45
+german,Gradient Boosting,SOTA Ensemble,2,0,640,160,200,67.5,56.95221696082652,0.22
+german,AdaBoost,SOTA Ensemble,2,0,640,160,200,70.0,60.00000000000001,0.91
+german,SVM (RBF),Geometric & DL,2,0,640,160,200,69.5,57.26944765507338,0.03
+german,KNN,Geometric & DL,2,0,640,160,200,72.0,52.574525745257446,0.01
+german,MLP (sklearn),Geometric & DL,2,0,640,160,200,70.0,41.17647058823529,0.05
+german,Logistic Regression,Interpretable,2,1,640,160,200,72.5,62.036238136324414,0.02
+german,Decision Tree,Interpretable,2,1,640,160,200,67.5,59.475045980236295,0.01
+german,EBM (InterpretML),Interpretable,2,1,640,160,200,74.5,69.78583488847418,13.05
+german,Naive Bayes,Interpretable,2,1,640,160,200,73.0,69.4708276797829,0.0
+german,XGBoost,SOTA Ensemble,2,1,640,160,200,73.0,67.54417598269022,0.03
+german,LightGBM,SOTA Ensemble,2,1,640,160,200,72.0,66.97723788182569,0.03
+german,CatBoost,SOTA Ensemble,2,1,640,160,200,74.5,67.07021791767554,0.88
+german,Random Forest,SOTA Ensemble,2,1,640,160,200,73.0,60.66433566433567,0.38
+german,Gradient Boosting,SOTA Ensemble,2,1,640,160,200,73.0,66.14420062695925,0.2
+german,AdaBoost,SOTA Ensemble,2,1,640,160,200,73.0,64.91683991683992,0.85
+german,SVM (RBF),Geometric & DL,2,1,640,160,200,71.5,64.05939657618462,0.03
+german,KNN,Geometric & DL,2,1,640,160,200,70.5,50.56763436806166,0.01
+german,MLP (sklearn),Geometric & DL,2,1,640,160,200,70.0,41.17647058823529,0.06
+german,Logistic Regression,Interpretable,2,2,640,160,200,71.0,62.77756385573097,0.02
+german,Decision Tree,Interpretable,2,2,640,160,200,62.0,58.24175824175825,0.01
+german,EBM (InterpretML),Interpretable,2,2,640,160,200,74.5,68.20349761526232,13.8
+german,Naive Bayes,Interpretable,2,2,640,160,200,64.5,63.24195594211902,0.01
+german,XGBoost,SOTA Ensemble,2,2,640,160,200,72.5,65.70965429096917,0.03
+german,LightGBM,SOTA Ensemble,2,2,640,160,200,73.0,65.75342465753424,0.03
+german,CatBoost,SOTA Ensemble,2,2,640,160,200,72.5,63.57495281300706,0.99
+german,Random Forest,SOTA Ensemble,2,2,640,160,200,72.0,61.06243916006119,0.43
+german,Gradient Boosting,SOTA Ensemble,2,2,640,160,200,70.5,61.904761904761905,0.23
+german,AdaBoost,SOTA Ensemble,2,2,640,160,200,73.0,65.75342465753424,0.92
+german,SVM (RBF),Geometric & DL,2,2,640,160,200,72.0,63.15304645348072,0.02
+german,KNN,Geometric & DL,2,2,640,160,200,71.5,58.81354095162398,0.01
+german,MLP (sklearn),Geometric & DL,2,2,640,160,200,70.5,42.93727936553992,0.05
+german,Logistic Regression,Interpretable,2,3,640,160,200,74.5,63.72559479355595,0.02
+german,Decision Tree,Interpretable,2,3,640,160,200,66.5,43.864940723053074,0.01
+german,EBM (InterpretML),Interpretable,2,3,640,160,200,76.0,68.41689696012634,12.89
+german,Naive Bayes,Interpretable,2,3,640,160,200,71.0,67.6916221033868,0.0
+german,XGBoost,SOTA Ensemble,2,3,640,160,200,74.0,63.84369350577111,0.03
+german,LightGBM,SOTA Ensemble,2,3,640,160,200,76.0,66.62494785148102,0.03
+german,CatBoost,SOTA Ensemble,2,3,640,160,200,75.0,64.70920383963862,0.93
+german,Random Forest,SOTA Ensemble,2,3,640,160,200,75.0,61.65055990182544,0.38
+german,Gradient Boosting,SOTA Ensemble,2,3,640,160,200,76.0,65.59139784946237,0.17
+german,AdaBoost,SOTA Ensemble,2,3,640,160,200,75.0,65.73464912280701,0.87
+german,SVM (RBF),Geometric & DL,2,3,640,160,200,75.5,62.75322108623769,0.02
+german,KNN,Geometric & DL,2,3,640,160,200,74.0,57.76478232618582,0.01
+german,MLP (sklearn),Geometric & DL,2,3,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,2,4,640,160,200,77.0,67.02508960573476,0.02
+german,Decision Tree,Interpretable,2,4,640,160,200,71.0,50.88075880758808,0.01
+german,EBM (InterpretML),Interpretable,2,4,640,160,200,75.5,67.54859432431537,13.36
+german,Naive Bayes,Interpretable,2,4,640,160,200,56.99999999999999,56.7230273752013,0.0
+german,XGBoost,SOTA Ensemble,2,4,640,160,200,77.0,68.47587719298247,0.02
+german,LightGBM,SOTA Ensemble,2,4,640,160,200,78.0,70.26625219624275,0.03
+german,CatBoost,SOTA Ensemble,2,4,640,160,200,79.0,70.35573122529644,0.9
+german,Random Forest,SOTA Ensemble,2,4,640,160,200,78.0,66.84749849306812,0.38
+german,Gradient Boosting,SOTA Ensemble,2,4,640,160,200,78.5,69.87846310111729,0.17
+german,AdaBoost,SOTA Ensemble,2,4,640,160,200,76.0,66.12083568605307,0.87
+german,SVM (RBF),Geometric & DL,2,4,640,160,200,77.0,67.53246753246754,0.02
+german,KNN,Geometric & DL,2,4,640,160,200,73.5,56.51282051282052,0.01
+german,MLP (sklearn),Geometric & DL,2,4,640,160,200,68.0,50.0,0.09
+german,Logistic Regression,Interpretable,3,0,640,160,200,76.5,68.0174202987309,0.02
+german,Decision Tree,Interpretable,3,0,640,160,200,69.0,57.510964912280706,0.01
+german,EBM (InterpretML),Interpretable,3,0,640,160,200,79.5,73.5270379338176,12.44
+german,Naive Bayes,Interpretable,3,0,640,160,200,74.5,70.58060050186035,0.0
+german,XGBoost,SOTA Ensemble,3,0,640,160,200,79.0,72.0,0.03
+german,LightGBM,SOTA Ensemble,3,0,640,160,200,79.5,74.14798701093981,0.03
+german,CatBoost,SOTA Ensemble,3,0,640,160,200,79.0,70.7968293700459,0.9
+german,Random Forest,SOTA Ensemble,3,0,640,160,200,82.0,75.32894736842105,0.38
+german,Gradient Boosting,SOTA Ensemble,3,0,640,160,200,81.0,74.32085416948236,0.19
+german,AdaBoost,SOTA Ensemble,3,0,640,160,200,80.5,73.46126365213841,0.86
+german,SVM (RBF),Geometric & DL,3,0,640,160,200,77.0,67.53246753246754,0.03
+german,KNN,Geometric & DL,3,0,640,160,200,72.0,49.19252404282344,0.01
+german,MLP (sklearn),Geometric & DL,3,0,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,3,1,640,160,200,69.5,55.19811978994529,0.01
+german,Decision Tree,Interpretable,3,1,640,160,200,69.0,51.5625,0.01
+german,EBM (InterpretML),Interpretable,3,1,640,160,200,72.5,63.086009597637506,13.09
+german,Naive Bayes,Interpretable,3,1,640,160,200,68.0,61.904761904761905,0.0
+german,XGBoost,SOTA Ensemble,3,1,640,160,200,71.5,61.21261610697153,0.03
+german,LightGBM,SOTA Ensemble,3,1,640,160,200,72.5,64.04171161452715,0.03
+german,CatBoost,SOTA Ensemble,3,1,640,160,200,71.0,59.0626764539808,0.89
+german,Random Forest,SOTA Ensemble,3,1,640,160,200,71.5,58.13594800044067,0.38
+german,Gradient Boosting,SOTA Ensemble,3,1,640,160,200,75.0,64.70920383963862,0.17
+german,AdaBoost,SOTA Ensemble,3,1,640,160,200,68.0,58.41995841995842,0.79
+german,SVM (RBF),Geometric & DL,3,1,640,160,200,70.0,55.562138942378915,0.02
+german,KNN,Geometric & DL,3,1,640,160,200,71.5,54.16348357524827,0.01
+german,MLP (sklearn),Geometric & DL,3,1,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,3,2,640,160,200,74.5,65.29549862202715,0.01
+german,Decision Tree,Interpretable,3,2,640,160,200,72.0,65.27777777777779,0.0
+german,EBM (InterpretML),Interpretable,3,2,640,160,200,75.5,69.10369179356222,12.64
+german,Naive Bayes,Interpretable,3,2,640,160,200,52.0,51.92307692307692,0.0
+german,XGBoost,SOTA Ensemble,3,2,640,160,200,75.5,68.36158192090396,0.02
+german,LightGBM,SOTA Ensemble,3,2,640,160,200,75.5,68.74102899429045,0.03
+german,CatBoost,SOTA Ensemble,3,2,640,160,200,77.5,69.37838113708278,0.9
+german,Random Forest,SOTA Ensemble,3,2,640,160,200,78.0,69.84649122807018,0.38
+german,Gradient Boosting,SOTA Ensemble,3,2,640,160,200,74.0,66.21621621621621,0.18
+german,AdaBoost,SOTA Ensemble,3,2,640,160,200,72.0,64.48503297818367,0.86
+german,SVM (RBF),Geometric & DL,3,2,640,160,200,75.5,66.65645946037904,0.02
+german,KNN,Geometric & DL,3,2,640,160,200,74.5,61.232944395880054,0.01
+german,MLP (sklearn),Geometric & DL,3,2,640,160,200,69.0,43.74886590455452,0.07
+german,Logistic Regression,Interpretable,3,3,640,160,200,76.0,66.12083568605307,0.01
+german,Decision Tree,Interpretable,3,3,640,160,200,72.0,58.52466301288698,0.01
+german,EBM (InterpretML),Interpretable,3,3,640,160,200,74.5,66.65685986074335,12.5
+german,Naive Bayes,Interpretable,3,3,640,160,200,73.5,70.37037037037037,0.0
+german,XGBoost,SOTA Ensemble,3,3,640,160,200,76.5,69.27200810695958,0.02
+german,LightGBM,SOTA Ensemble,3,3,640,160,200,75.0,67.91169297907842,0.03
+german,CatBoost,SOTA Ensemble,3,3,640,160,200,75.5,64.01160442143146,0.92
+german,Random Forest,SOTA Ensemble,3,3,640,160,200,73.5,58.20024448913601,0.37
+german,Gradient Boosting,SOTA Ensemble,3,3,640,160,200,74.5,64.79723899913719,0.18
+german,AdaBoost,SOTA Ensemble,3,3,640,160,200,74.0,64.3640350877193,0.87
+german,SVM (RBF),Geometric & DL,3,3,640,160,200,75.0,64.15770609318996,0.02
+german,KNN,Geometric & DL,3,3,640,160,200,71.0,49.78354978354979,0.01
+german,MLP (sklearn),Geometric & DL,3,3,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,3,4,640,160,200,72.5,63.57495281300706,0.02
+german,Decision Tree,Interpretable,3,4,640,160,200,75.0,62.9684491186491,0.01
+german,EBM (InterpretML),Interpretable,3,4,640,160,200,78.5,72.5686580970304,12.89
+german,Naive Bayes,Interpretable,3,4,640,160,200,49.0,48.748869460355735,0.0
+german,XGBoost,SOTA Ensemble,3,4,640,160,200,76.0,70.23809523809523,0.03
+german,LightGBM,SOTA Ensemble,3,4,640,160,200,74.0,67.39811912225704,0.03
+german,CatBoost,SOTA Ensemble,3,4,640,160,200,75.5,66.17773943054357,0.9
+german,Random Forest,SOTA Ensemble,3,4,640,160,200,74.5,63.148957693558295,0.37
+german,Gradient Boosting,SOTA Ensemble,3,4,640,160,200,75.5,69.10369179356222,0.17
+german,AdaBoost,SOTA Ensemble,3,4,640,160,200,76.5,70.36476559790663,0.81
+german,SVM (RBF),Geometric & DL,3,4,640,160,200,72.0,61.06243916006119,0.02
+german,KNN,Geometric & DL,3,4,640,160,200,72.5,56.622895224575096,0.01
+german,MLP (sklearn),Geometric & DL,3,4,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,4,0,640,160,200,75.5,66.17773943054357,0.01
+german,Decision Tree,Interpretable,4,0,640,160,200,70.5,64.36229651777354,0.0
+german,EBM (InterpretML),Interpretable,4,0,640,160,200,77.5,70.57958223006766,12.25
+german,Naive Bayes,Interpretable,4,0,640,160,200,71.5,69.8340874811463,0.0
+german,XGBoost,SOTA Ensemble,4,0,640,160,200,76.0,68.41689696012634,0.03
+german,LightGBM,SOTA Ensemble,4,0,640,160,200,78.0,72.09538305428715,0.03
+german,CatBoost,SOTA Ensemble,4,0,640,160,200,78.5,68.41834673717455,0.92
+german,Random Forest,SOTA Ensemble,4,0,640,160,200,77.5,66.38655462184873,0.37
+german,Gradient Boosting,SOTA Ensemble,4,0,640,160,200,77.5,70.19768866518758,0.18
+german,AdaBoost,SOTA Ensemble,4,0,640,160,200,76.0,67.10526315789474,0.88
+german,SVM (RBF),Geometric & DL,4,0,640,160,200,74.5,65.29549862202715,0.03
+german,KNN,Geometric & DL,4,0,640,160,200,72.0,53.57320510694744,0.01
+german,MLP (sklearn),Geometric & DL,4,0,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,4,1,640,160,200,74.5,65.29549862202715,0.02
+german,Decision Tree,Interpretable,4,1,640,160,200,59.0,52.89522058823529,0.01
+german,EBM (InterpretML),Interpretable,4,1,640,160,200,73.5,64.89949998344315,12.37
+german,Naive Bayes,Interpretable,4,1,640,160,200,51.5,51.40158821613768,0.0
+german,XGBoost,SOTA Ensemble,4,1,640,160,200,73.0,64.46900908014213,0.02
+german,LightGBM,SOTA Ensemble,4,1,640,160,200,74.0,66.62816069824156,0.03
+german,CatBoost,SOTA Ensemble,4,1,640,160,200,74.0,65.33333333333333,0.96
+german,Random Forest,SOTA Ensemble,4,1,640,160,200,74.0,61.48718708339506,0.38
+german,Gradient Boosting,SOTA Ensemble,4,1,640,160,200,73.0,62.99342105263157,0.18
+german,AdaBoost,SOTA Ensemble,4,1,640,160,200,71.0,61.33333333333333,0.86
+german,SVM (RBF),Geometric & DL,4,1,640,160,200,76.0,67.56318421408298,0.02
+german,KNN,Geometric & DL,4,1,640,160,200,74.5,60.52478811099501,0.01
+german,MLP (sklearn),Geometric & DL,4,1,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,4,2,640,160,200,77.0,70.47875754075214,0.03
+german,Decision Tree,Interpretable,4,2,640,160,200,74.0,68.43127731908693,0.01
+german,EBM (InterpretML),Interpretable,4,2,640,160,200,75.0,68.99801587301587,13.9
+german,Naive Bayes,Interpretable,4,2,640,160,200,51.0,51.0,0.0
+german,XGBoost,SOTA Ensemble,4,2,640,160,200,75.5,67.96443398385146,0.03
+german,LightGBM,SOTA Ensemble,4,2,640,160,200,77.0,70.82699137493658,0.03
+german,CatBoost,SOTA Ensemble,4,2,640,160,200,78.5,70.73934197543466,1.01
+german,Random Forest,SOTA Ensemble,4,2,640,160,200,79.0,69.89247311827957,0.43
+german,Gradient Boosting,SOTA Ensemble,4,2,640,160,200,80.0,73.68074746677193,0.18
+german,AdaBoost,SOTA Ensemble,4,2,640,160,200,79.0,72.36478484011054,0.93
+german,SVM (RBF),Geometric & DL,4,2,640,160,200,77.0,68.91471820516286,0.02
+german,KNN,Geometric & DL,4,2,640,160,200,72.0,55.406911928651056,0.01
+german,MLP (sklearn),Geometric & DL,4,2,640,160,200,70.0,41.17647058823529,0.04
+german,Logistic Regression,Interpretable,4,3,640,160,200,74.0,63.84369350577111,0.02
+german,Decision Tree,Interpretable,4,3,640,160,200,70.0,63.194700036805294,0.01
+german,EBM (InterpretML),Interpretable,4,3,640,160,200,78.5,72.23567393058919,13.84
+german,Naive Bayes,Interpretable,4,3,640,160,200,75.5,71.96716153208044,0.01
+german,XGBoost,SOTA Ensemble,4,3,640,160,200,76.0,69.19522525991528,0.03
+german,LightGBM,SOTA Ensemble,4,3,640,160,200,74.5,67.84261798921783,0.04
+german,CatBoost,SOTA Ensemble,4,3,640,160,200,75.0,63.578088578088575,0.89
+german,Random Forest,SOTA Ensemble,4,3,640,160,200,73.0,58.582604693971476,0.45
+german,Gradient Boosting,SOTA Ensemble,4,3,640,160,200,74.5,65.77066344508205,0.23
+german,AdaBoost,SOTA Ensemble,4,3,640,160,200,74.0,65.78497170680353,0.9
+german,SVM (RBF),Geometric & DL,4,3,640,160,200,74.0,62.121212121212125,0.03
+german,KNN,Geometric & DL,4,3,640,160,200,73.0,55.231304924556454,0.01
+german,MLP (sklearn),Geometric & DL,4,3,640,160,200,70.0,41.17647058823529,0.05
+german,Logistic Regression,Interpretable,4,4,640,160,200,71.0,59.0626764539808,0.02
+german,Decision Tree,Interpretable,4,4,640,160,200,68.0,57.8891959468351,0.01
+german,EBM (InterpretML),Interpretable,4,4,640,160,200,73.5,65.34928573763526,13.39
+german,Naive Bayes,Interpretable,4,4,640,160,200,52.0,51.95676108497648,0.01
+german,XGBoost,SOTA Ensemble,4,4,640,160,200,73.0,64.0,0.03
+german,LightGBM,SOTA Ensemble,4,4,640,160,200,73.5,65.77885391444713,0.03
+german,CatBoost,SOTA Ensemble,4,4,640,160,200,75.0,65.73464912280701,0.88
+german,Random Forest,SOTA Ensemble,4,4,640,160,200,74.5,64.27445623620889,0.38
+german,Gradient Boosting,SOTA Ensemble,4,4,640,160,200,74.0,65.33333333333333,0.18
+german,AdaBoost,SOTA Ensemble,4,4,640,160,200,73.0,62.99342105263157,0.82
+german,SVM (RBF),Geometric & DL,4,4,640,160,200,74.0,63.84369350577111,0.02
+german,KNN,Geometric & DL,4,4,640,160,200,71.5,53.23076923076924,0.01
+german,MLP (sklearn),Geometric & DL,4,4,640,160,200,70.0,41.17647058823529,0.04

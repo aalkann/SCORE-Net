@@ -1,0 +1,59 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Tabular data is one of the most common data formats in practical applications \cite{Lee2024,Mahendra2026}. It is widely used in high-stakes fields such as credit scoring, loan approvals, criminal recidivism risk assessment, and clinical decision support~\cite{rudin2019stop,caruana2015intelligible,zeng2017interpretable}. In these domains, model predictions directly affect people's lives and financial well-being. Over the past decade, ensemble methods---such as XGBoost~\cite{chen2016xgboost}, LightGBM~\cite{ke2017lightgbm}, and CatBoost~\cite{prokhorenkova2018catboost}---as well as deep neural networks and, most recently, tabular foundation models~\cite{hollmann2025tabpfn} have achieved strong predictive performance on tabular benchmarks. However, these models offer limited transparency into how they reach a prediction. Many act as ``black boxes'' with complex internal structures, so domain experts cannot easily inspect how a specific decision is made.
+
+The need for model transparency is reinforced by legal regulations such as the European Union Artificial Intelligence Act (EU AI Act)~\cite{eu2024ai} and the General Data Protection Regulation (GDPR)~\cite{wachter2017counterfactual}. These laws increasingly require automated decision systems to provide meaningful explanations to affected individuals. To meet this requirement, researchers commonly turn to post-hoc explanation methods such as SHAP~\cite{lundberg2017unified} and LIME~\cite{ribeiro2016why}. However, these explanations do not necessarily reveal how the model actually decides, and they can suffer from limited faithfulness, high computational cost, or vulnerability to adversarial manipulation~\cite{rudin2019stop,slack2020fooling}.
+
+Consequently, interest has grown in \emph{inherently interpretable} (or ``glass-box'') models, in which transparency is built into the architecture itself. Yet glass-box models face a hard trade-off between predictive power and simplicity. Linear models cannot capture complex feature interactions, while deep decision trees quickly grow too large to follow. Generalized additive models become computationally heavy in multi-class settings, and discrete integer scorecards are hard to optimize at scale. Domain experts are thus caught between the high accuracy of neural networks and the practical clarity of rule-based scorecards.
+
+
+To bridge this divide, we propose \modelname{} (\textbf{S}elf-explaining \textbf{C}onvex \textbf{O}perational \textbf{R}ule \textbf{E}ngine), an inherently interpretable neural network for tabular classification. \modelname{} combines the gradient-based training of neural networks with the operational simplicity of rule-based scorecards.
+
+
+The central idea behind \modelname{} is geometric. Instead of letting each hidden
+unit respond over an unbounded region of the input space, the architecture
+confines every unit to a localized convex slab. Each unit therefore behaves as an
+inspectable interval rule with a bounded firing region. A linear output layer
+aggregates the firing strengths of these rules into signed class scores. Thus any
+single prediction can be written as a baseline term plus a small number of rule
+contributions. To keep the rule set compact, the model is regularized and structurally pruned. The surviving rules can optionally be converted into small integer scorecards. When the rule set is small enough, such a scorecard can be evaluated by hand, while larger rule sets remain inspectable rule by rule.
+
+The contribution is therefore best read as an \emph{explainability} result rather
+than a new accuracy frontier. Localized activations, magnitude pruning, and integer scorecards all exist in the literature. We examine whether they can be combined into a single model whose decisions remain inspectable end to end. We also investigate the predictive performance trade-offs associated with this combination. Each design
+choice follows from this goal. The bias-free projection gives pruning a clean
+semantic meaning, the pruning schedule shortens rules rather than merely
+compressing the network. The quantization step keeps each rule small enough
+to inspect and, for compact models, to score by hand. The experiments report
+where the retained transparency costs accuracy and where it does not. They also include a
+variant of the recidivism benchmark with the legally protected attributes
+removed.
+
+The main contributions of this paper are summarized as follows:
+
+\begin{enumerate}
+    \item \textbf{Localized Convex Slab Neural Architecture:} We introduce \modelname{}, an end-to-end differentiable glass-box architecture for tabular classification. By combining bias-free feature projections with localized triangular activations, each hidden neuron represents an inspectable rule defined over a bounded convex slab.
+    \item \textbf{Exact Bias Shifting for Pruned Rules:} We state and prove an exact identity, showing that structurally empty rules from magnitude pruning can be absorbed into the output layer bias with zero change in model predictions.
+    \item \textbf{Rule-Level Integer Scorecard Formulation:} We develop a rule-adaptive
+    quantization procedure that maps continuous projection weights into low-magnitude
+    integers, turning each rule into a transparent scorecard entry that retains
+    95.45--100\% prediction agreement with the float model.
+    \item \textbf{Empirical Evaluation and Tools:} We evaluate \modelname{} on four
+    benchmarks against 13 baselines with a validation-only selection protocol. Two
+    post-hoc operating points are test-informed and declared explicitly in
+    Section~\ref{subsubsec:protocol}. We report bootstrap confidence intervals,
+    McNemar tests and repeated stratified cross-validation for every model and
+    dataset. We also provide closed-form tools for local decision decomposition, global
+    feature influence and geometric recourse. Thus, a fitted model can be inspected
+    without a surrogate explainer.
+\end{enumerate}
+
+
+The remainder of this paper is organized as follows.
+Section~\ref{sec:related_work} reviews interpretable tabular learning, neural rule
+representations, pruning, scorecards, and post-hoc methods.
+Section~\ref{sec:methodology} presents the formulation, the convex slab geometry,
+the exact bias-shifting property, the quantization algorithm, and the analytical
+interpretability tools. Section~\ref{sec:experiments} reports the experimental
+setup, benchmarks, pruning behavior, quantization fidelity, and case studies.
+Section~\ref{sec:conclusion} concludes and outlines future work.

@@ -1,0 +1,597 @@
+\section{Experiments and Results}
+\label{sec:experiments}
+
+\subsection{Experimental Setup and Benchmark Datasets}
+\label{subsec:setup}
+
+\subsubsection{Benchmark Datasets}
+We evaluate \modelname{} on four tabular benchmarks spanning real-world risk
+assessment and a multi-class geometric task:
+
+\begin{itemize}
+    \item \textbf{COMPAS Recidivism Risk~\cite{angwin2016machine}:} criminal
+    justice records ($N = 13$ features, $M = 7{,}214$ samples) used to predict
+    two-year recidivism.
+    \item \textbf{German Credit Risk~\cite{hofmann1994statlog}:} financial
+    underwriting data ($N = 48$ features after one-hot encoding, $M = 1{,}000$
+    samples) classifying loan applicants as good or bad credit risks.
+    \item \textbf{UCI Adult Census Income~\cite{becker1996adult}:} a
+    large-scale demographic benchmark ($N = 97$ features after encoding,
+    $M = 45{,}222$ samples) predicting whether annual income exceeds \$50{,}000.
+    The raw UCI release contains 48{,}842 rows; we remove the 3{,}620 rows with
+    missing values in \textit{workclass}, \textit{occupation} or
+    \textit{native-country}, a standard listwise-deletion step that leaves the
+    45{,}222 samples used here.
+    \item \textbf{Synthetic Multiclass Benchmark:} a synthetic dataset ($C = 20$
+    classes, $N = 30$ continuous features, $M = 20{,}000$ samples) generated with
+    Scikit-learn~\cite{pedregosa2011scikit}, with non-axis-aligned, localized
+    decision regions.
+\end{itemize}
+
+Supplementary Table~S1 lists the resulting splits.
+
+\subsubsection{Training and Evaluation Protocol}
+\label{subsubsec:protocol}
+All datasets are split with stratification and a fixed seed (42). The training
+partition is used for gradient updates, the validation partition for early
+stopping, pruning-iteration selection and checkpoint selection, and the test
+partition only for the final evaluation. Model selection therefore never sees the
+test partition. Two configuration choices were nevertheless made with the
+single-split test partition available, and we declare both as operating points
+rather than as test-independent hyperparameters: the number of pruning iterations
+for German Credit (14 instead of 20), and the integer-quantization budget
+$(\Lambda_{\max}, \tau_{tol})$ of
+Section~\ref{subsec:quantization_fidelity}. The former changes how many pruning
+steps the Compact checkpoint receives; the latter changes only the reported
+integer scorecard. The sensitivity of the German depth choice is quantified in
+Section~\ref{subsec:limitations}.
+
+Stratification preserves the training class
+ratios: 54.9/45.1 (COMPAS), 70.0/30.0 (German Credit), 75.2/24.8 (UCI Adult), and
+approximately 5\% per class for the balanced 20-class synthetic task.
+
+COMPAS, UCI Adult and Synthetic use a 72/8/20 split into training, validation
+and test. German Credit is the exception: with $M = 1{,}000$, such a split
+leaves only 80 validation examples, and one example is worth 1.25 percentage
+points, which is too coarse for reliable model selection. We therefore use an 80/10/10 split
+(800/100/100). Because a 100-example test set remains small (one example equals
+1.0 percentage point), all German Credit results are reported together with a
+repeated stratified $5\times5$ cross-validation
+(Section~\ref{subsec:comparative_results}).
+
+Pruning follows Section~\ref{subsec:pruning}. Two checkpoints are retained.
+\emph{Global Best} is the pruning iteration with the highest validation accuracy
+and serves as an accuracy ceiling. \emph{Compact} is the final pruning iteration
+and is the sparse operating point used for all scorecard and case-study analyses.
+On German Credit the Global Best checkpoint is selected with a 3-iteration moving
+average of validation accuracy, because a single 100-example validation estimate
+is too noisy to rank adjacent pruning iterations; all other datasets use the raw
+validation accuracy.
+
+Training hyperparameters are fixed per dataset and registered in the code base,
+with the two operating points above as the only exception. Initial hidden
+capacity is $32$ for COMPAS, $64$ for German Credit and UCI Adult, and
+$1{,}024$ for Synthetic. Dropout is $0.25$ only for German Credit and $0.1$
+otherwise, and mini-batches are $64$ for COMPAS and German Credit and $256$ for
+the other two. Each pruning step removes $20\%$ of the remaining weights on
+COMPAS and German Credit, $25\%$ on UCI Adult and $10\%$ on Synthetic, over $19$,
+$14$, $15$ and $20$ iterations respectively. Every model uses Adam with a
+learning rate of $10^{-3}$, gradient clipping at $1.0$, $\ell_1$ penalties of
+$5\times10^{-4}$ on both weight layers, and early stopping with a patience of
+$20$ and at most $250$ epochs per stage.
+
+\subsubsection{Preprocessing Protocol and Data Hygiene}
+Continuous features are standardized to zero mean and unit variance,
+$\tilde{x}_j = (x_j - \mu_j)/\sigma_j$, with $\mu_j$ and $\sigma_j$ computed on
+the training partition only and applied unchanged to validation and test.
+Categorical features are one-hot encoded with one reference level dropped; the
+encoding is label-free, so it cannot transfer target information. \modelname{}
+and every baseline therefore observe identical inputs and splits.
+
+\subsubsection{Baseline Models}
+We compare against 13 baselines in three families:
+\begin{enumerate}
+    \item \textbf{Inherently interpretable:} $\ell_1$-regularized logistic
+    regression~\cite{hosmer2000applied,tibshirani1996lasso}, a depth-limited CART decision
+    tree~\cite{breiman1984classification}, Explainable Boosting Machines (EBM,
+    InterpretML~\cite{caruana2015intelligible,lou2012intelligible}), and Gaussian
+    Naive Bayes~\cite{hand2001idiot}.
+    \item \textbf{Tree ensembles:} XGBoost~\cite{chen2016xgboost},
+    LightGBM~\cite{ke2017lightgbm}, CatBoost~\cite{prokhorenkova2018catboost},
+    Random Forest~\cite{breiman2001random}, Gradient
+    Boosting~\cite{friedman2001greedy}, and AdaBoost~\cite{freund1997decision}.
+    \item \textbf{Geometric and deep models:} a multi-layer
+    perceptron~\cite{rumelhart1986learning,goodfellow2016deep}, an RBF-kernel support vector
+    machine~\cite{cortes1995support}, and $k$-nearest
+    neighbors~\cite{cover1967nearest}.
+\end{enumerate}
+Baselines are trained on the same training partition and evaluated on the same
+test partition as \modelname{}; no baseline is tuned on test data.
+
+\subsubsection{Evaluation Metrics and Statistical Treatment}
+We report test accuracy, macro-averaged F1, and ROC-AUC (one-vs-rest macro
+average for the 20-class task), all in percent. Because test-set sizes differ by
+almost two orders of magnitude (100 examples on German Credit, 9{,}045 on UCI
+Adult), a bare accuracy percentage is not comparable across datasets. For every
+dataset and variant we therefore report a stratified-bootstrap 95\% confidence
+interval on test accuracy and macro-F1, the validation--test gap of the selected
+checkpoint, and a paired McNemar test against the strongest baseline, taken as the
+one with the highest observed test accuracy. The exact binomial test is used for
+German Credit and the continuity-corrected $\chi^2$ test otherwise. Differences
+with $p > 0.05$ are described as not distinguishable from sampling noise, never as
+improvements. At $\alpha = 0.05$ and power $0.8$, a 100-example test set cannot
+resolve differences below about 20 percentage points, whereas the 9{,}045-example
+Adult partition resolves about 2 points. The German Credit single split is
+therefore reported for completeness only; the cross-validation of
+Section~\ref{subsec:comparative_results} carries the comparative claim for that
+dataset.
+
+\subsubsection{Hardware}
+All experiments were executed on a 6-core (12-thread) Intel Core i7-10750H
+x86\_64 host with 16~GB of RAM, an NVIDIA GeForce GTX 1650 GPU (4~GB), PyTorch
+2.6 and CUDA 12.4. CPU timings use the library-default thread counts rather than
+a pinned single thread.
+
+\subsection{Comparative Predictive Performance}
+\label{subsec:comparative_results}
+
+Table~\ref{tab:benchmark_comparison} reports the full benchmark, and
+Table~\ref{tab:statistical_reliability} adds confidence intervals, validation--test
+gaps and McNemar tests. We discuss each dataset separately, because the
+accuracy--complexity trade-off differs substantially between them.
+
+\input{generated/tab_benchmark_comparison.tex}
+
+\input{generated/tab_statistical_reliability.tex}
+
+\subsubsection{COMPAS Recidivism Risk}
+On COMPAS the Global Best checkpoint reaches 68.33\% accuracy, 67.81\% macro-F1
+and 72.82\% ROC-AUC with 11 rules. This is 0.42 percentage points below the best
+baseline (logistic regression, 68.75\%), a difference that the McNemar test
+cannot distinguish from noise ($p = 0.714$). The Compact checkpoint trades
+accuracy for sparsity: 66.32\% accuracy with 5 rules, 2.43 points below logistic
+regression ($p = 0.018$). We therefore do not claim that \modelname{} dominates
+on COMPAS. The shared $5\times5$ folds confirm this reading: the Global Best
+model reaches $67.56 \pm 1.49\%$ against $67.94 \pm 1.17\%$ for CatBoost, a
+paired difference of 0.38 points, while the Compact model reaches
+$66.81 \pm 1.66\%$. On this dataset the cross-validated gap is therefore the
+same size as the single-split gap. The relevant observation is that a five-rule
+model remains within 2.4 points of the best of 13 baselines, and the complete
+model can be written on a single line and audited by hand
+(Section~\ref{subsec:case_studies}).
+
+\subsubsection{Removing the Protected Attributes}
+COMPAS records sex and race, and the default preprocessing one-hot encodes both,
+so the model above can read a protected attribute directly. Because the paper is
+motivated by high-stakes decisions, we repeat the evaluation with those columns
+removed: the input drops from 13 to 7 features (age, three prior-offence counts,
+two age bands and the charge degree), with split ratios and pruned-model
+hyperparameters unchanged. Cross-validated accuracy is essentially unchanged for
+Global Best ($67.67 \pm 1.35\%$ against $67.56 \pm 1.49\%$) and drops by about one
+point for Compact ($65.62 \pm 2.42\%$ against $66.81 \pm 1.66\%$;
+Supplementary Table~S2). The protected attributes therefore carry almost no
+predictive signal here, and the transparency argument does not depend on them. We
+use the restricted variant in the case study of Section~\ref{subsec:case_studies}
+so that no rule shown to a reader is conditioned on race or sex.
+
+\subsubsection{German Credit Underwriting}
+On German Credit the Global Best checkpoint reaches 76.00\% accuracy and the
+Compact checkpoint 75.00\%, both with 100 test examples and a 95\% confidence
+interval of about $\pm 7.5$ points. The strongest baseline is Random Forest at
+76.00\%, and the paired McNemar test yields $p = 1.000$ for both variants: at
+this test size the difference is not distinguishable from sampling noise. The
+Compact model reaches these numbers with 46 rules and an average rule length of
+2.70 features. The Global Best checkpoint keeps all 64 rules with an average
+rule length of 30.72 features, and is best read as an accuracy ceiling rather
+than as an interpretable model.
+
+Because a single 100-example test split is fragile, we repeat the evaluation
+under a stratified $5\times5$ cross-validation applied to every dataset and every
+model (Table~\ref{tab:cross_validation}). On German Credit each of the 25 fits
+uses a 200-example outer test fold and a 160-example inner validation fold; the
+outer fold is never used for early stopping or model selection. The Compact model
+obtains $73.02 \pm 2.71\%$ and the Global Best model $72.72 \pm 2.78\%$ (mean
+$\pm$ standard deviation over the 25 folds). The two variants are therefore
+indistinguishable from each other in cross-validation as well, and their
+cross-validated means are 2.0 and 3.3 points below the single-split estimate.
+
+Running the same folds for the baselines changes the picture. CatBoost reaches
+$75.78 \pm 2.68\%$, Gradient Boosting $75.44 \pm 2.91\%$ and EBM
+$75.32 \pm 2.51\%$, against $73.02 \pm 2.71\%$ for Compact and
+$72.72 \pm 2.78\%$ for Global Best. The paired per-fold difference against
+CatBoost is $2.76$ points for Compact and $3.06$ points for Global Best, and
+\modelname{} wins 2 and 4 of the 25 folds. The single-split parity therefore does
+not survive cross-validation. We attribute this to checkpoint selection: the
+German budgets were chosen while looking at this 1{,}000-example dataset, whereas
+the baseline hyperparameters were fixed once and evaluated on the same folds. We
+therefore read the German Credit result as \emph{competitive but behind the
+strongest ensembles}, not as parity, and report both estimates. Because the folds
+are shared, the cross-validated difference is a paired comparison; the McNemar
+tests on the single split remain the per-example test.
+
+\input{generated/tab_cross_validation.tex}
+
+\subsubsection{UCI Adult Census Income}
+On the 45{,}222-sample Adult benchmark the gradient-boosted ensembles are
+strongest (Gradient Boosting 86.87\%, LightGBM 86.69\%, CatBoost 86.80\%).
+\modelname{} reaches 85.30\% (Global Best, 51 rules) and 85.61\% (Compact, 43
+rules), i.e., 1.26--1.57 points below the best baseline; the McNemar test is
+significant ($p < 0.001$), so this is a genuine gap rather than noise. The gap is
+nonetheless small relative to the difference in representation: the Compact model
+exposes 43 rules with 1.91 features per rule and 256 active parameters, whereas
+the tree ensembles use 100--500 trees each. The shared $5\times5$ folds agree:
+LightGBM reaches $86.97 \pm 0.27\%$ and Gradient Boosting $86.95 \pm 0.24\%$,
+against $85.45 \pm 0.29\%$ for Global Best and $85.12 \pm 0.36\%$ for Compact, so
+the gap widens slightly to 1.52--1.85 points and \modelname{} wins none of the 25
+folds. We regard Adult as evidence that the representation remains competitive on
+large tabular data, not as evidence of superiority.
+
+\subsubsection{Synthetic Multiclass Benchmark}
+The 20-class synthetic task is the setting in which the geometric inductive bias
+of \modelname{} is most visible. Tree ensembles range from 50.85\% to 65.35\%
+accuracy (CatBoost 65.35\%, LightGBM 63.65\%, XGBoost 61.75\%), and the
+scikit-learn MLP reaches 71.75\%. \modelname{} reaches 90.03\% with 565 rules
+(Compact) and 95.78\% with 788 rules (Global Best), with ROC-AUC above 99.3\%.
+The improvement over the best baseline is 18.28 and 24.03 points respectively
+($p < 0.001$). The shared $5\times5$ folds reproduce this: $95.58 \pm 0.40\%$
+for the Global Best model and $89.32 \pm 0.73\%$ for the Compact model against
+$71.96 \pm 0.67\%$ for the scikit-learn MLP, and \modelname{} wins all 25 folds
+with either variant. Because the data are generated from localized,
+non-axis-aligned regions, this result should be read as a controlled
+demonstration that oblique convex slabs can represent such geometry efficiently,
+not as evidence that \modelname{} will outperform tree ensembles on arbitrary
+real-world tabular data.
+
+\subsubsection{Comparison with Other Glass-Box Models}
+Because the central claim concerns interpretability rather than raw accuracy,
+the most informative baseline is EBM, which is also a glass-box model. On COMPAS
+the two are close (EBM 67.98\% versus 68.33\% for Global Best), and on German
+Credit \modelname{} is more accurate (76.00\% versus 72.00\%). On UCI Adult,
+however, EBM is better (86.69\% versus 85.30--85.61\%), and its per-feature shape
+functions are easier to read than a long oblique rule. The difference is
+representational: EBM models additive univariate and pairwise effects, so it
+represents a 20-class problem with localized non-axis-aligned regions poorly
+(32.27\% on Synthetic) and does not produce a sparse rule set or an integer
+scorecard. \modelname{} therefore trades some of EBM's additive simplicity for
+rule-level sparsity, signed rule contributions and a compact scorecard; it does
+not dominate EBM on accuracy.
+
+\subsubsection{Rule-List Learners}
+The 13 baselines above do not return an explicit rule list, so we also ran two
+established rule learners from \texttt{imodels} on the same partitions: RuleFit
+and a Skope-rules style conjunction miner. The Global Best variant exceeds the
+stronger of the two on all three binary benchmarks, and Compact exceeds it on
+German Credit and UCI Adult but trails RuleFit by 0.35 points on COMPAS
+(66.32\% versus 66.67\%), which we report as measured. Neither learner supports
+the 20-class task. Full numbers are given in Supplementary Section~S5.
+
+\subsection{Structural Compactness, Pruning, and Inference Cost}
+\label{subsec:pruning_trajectories}
+
+Figure~\ref{fig:pruning_trajectory} shows the validation accuracy--sparsity
+trajectories recorded during iterative magnitude pruning, and
+Table~\ref{tab:computational_efficiency} reports the final rule counts, average
+rule lengths, parameter counts and measured latencies.
+
+\input{generated/tab_computational_efficiency.tex}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig_pruning_trajectory.pdf}
+\caption{Iterative magnitude pruning trajectories. Each point is one pruning
+iteration; the horizontal axis is feature-connection sparsity and the vertical
+axis is validation accuracy. Stars mark the validation-selected Global Best
+checkpoint and diamonds the final Compact checkpoint. Pruning removes a large
+fraction of connections while the validation accuracy remains in a narrow band;
+the final iterations of German Credit and Synthetic show the expected increase in
+variance as the rule set becomes very small.}
+\label{fig:pruning_trajectory}
+\end{figure*}
+
+\subsubsection{Rule Counts and Rule Length}
+The effect of pruning is dataset-dependent. On COMPAS, 32 initial rules collapse
+to 11 (Global Best) or 5 (Compact), with 1.27 and 1.20 features per rule and
+96.6\% and 98.6\% connection sparsity; the Compact model has 28 active
+parameters. On German Credit the Compact model retains 46 of 64 rules with 2.70
+features per rule and 96.0\% sparsity (310 active parameters), whereas the Global
+Best checkpoint keeps all 64 rules with 30.72 features per rule; validation
+accuracy on this dataset peaks in the first pruning iterations, so the accuracy
+ceiling is a dense model. This is why we separate the two checkpoints instead of
+reporting a single ``pruned'' model. On UCI Adult, 64 rules reduce to 51 and 43,
+with 6.86 and 1.91 features per rule and 94.4\% and 98.7\% sparsity. On
+Synthetic, 1{,}024 initial rules reduce to 788 and 565, with 26.29 and 6.61
+features per rule; the 20-class problem requires substantially longer rules,
+which is why the synthetic scorecard has a wider
+integer range (Section~\ref{subsec:quantization_fidelity}).
+Across the three binary benchmarks, the Compact models use between 5 and 46 rules
+and between 1.20 and 2.70 features per rule, which is the scenario in which
+rule-by-rule auditing is realistic. The parameter counts above are active
+parameters: weight entries with magnitude above $10^{-4}$, plus all rule
+centers, widths and output biases. They are not the dense $H\times N$ storage
+footprint. The current implementation keeps the surviving rules as dense
+$H\times N$ matrices, so storage and dense-kernel arithmetic scale with
+$H\times N$; connection sparsity is an auditability property, not a speedup that
+the kernel realizes. The synthetic model is deliberately kept as a capacity
+benchmark and is not presented as a human-auditable artifact.
+
+\subsubsection{Dual-Device Latency}
+Because the compact model retains only a few rules and features per rule, its
+forward pass is small and inference is inexpensive
+(Table~\ref{tab:computational_efficiency}). On the host CPU a \emph{single
+query} (batch $=1$) takes 59.4--84.4~$\mu$s, while batch inference over an entire
+test set for the Compact model takes 0.08--6.72~ms, the upper end being the
+Synthetic test set (4{,}000 samples). At these sizes the single-query gap is
+per-call framework overhead, not arithmetic. On the GPU, kernel-launch overhead
+dominates (347--384~$\mu$s; the input tensor is preloaded, so host-to-device
+transfer is excluded), so the CPU is faster for online scoring and the GPU pays
+off only for large batches, where it is about $6.7\times$ faster on Synthetic.
+
+On the amortized per-instance metric (batch latency divided by the number of test
+examples) \modelname{} processes one German Credit instance in 0.8~$\mu$s,
+against 1.1--364.8~$\mu$s for the 13 baselines measured under the same host CPU
+and test set (Supplementary Table~S4). The representative gradient-boosted
+ensembles are 4--10 times slower, whereas Random Forest and AdaBoost are about
+300 and 440 times slower. Each model is timed through its own prediction API, so
+the comparison reflects library-default threading and call overhead rather than a
+thread-matched kernel benchmark. A single query is less favorable: per-call
+overhead dominates and \modelname{} needs about 60~$\mu$s
+(Table~\ref{tab:computational_efficiency}). Single-query baselines were not
+measured, so the two definitions are not interchangeable. The SCORE-Net batch
+standard deviation is below 0.03~$\mu$s per sample, so the gap to logistic
+regression (1.4~$\mu$s) is well above measurement noise. Random Forest is at most
+1.0 point more accurate here but more than two orders of magnitude slower per
+instance.
+
+Training cost is a different matter. A full pruning trajectory takes about
+0.23~min on German Credit, 2.9~min on COMPAS, 5.2~min on UCI Adult and 7.9~min on
+Synthetic, averaged over the cross-validation folds (Supplementary Table~S3).
+The trajectory contains the base fit plus 14--20 pruning stages, so the per-stage
+cost is comparable to a single baseline fit; on Synthetic the two are almost
+equal, while the baselines are cheaper on the other three datasets. The compact
+structure is therefore paid for once, offline, and is not free at training time.
+
+\subsection{Integer Scorecard Fidelity}
+\label{subsec:quantization_fidelity}
+
+\input{generated/tab_scorecard_fidelity.tex}
+
+\subsubsection{Adaptive Scaling versus Global Scaling}
+A small global multiplier destroys accuracy: with $\lambda \le 2$ many weights
+round to zero and accuracy falls to 70.00\%. Accuracy returns to the float level
+for $\lambda \ge 10$, with a visible dip at $\lambda = 100$ caused by rounding a
+few borderline cases, but a large uniform multiplier inflates the integer range:
+at $\lambda = 1000$ the point span approaches 700, which makes manual scoring
+impractical (Supplementary Figure~S2). The rule-adaptive scheme of
+Equation~\eqref{eq:adaptive_scale} instead selects the smallest multiplier per
+rule that satisfies a relative rounding tolerance ($\tau_{tol} = 1\%$ for German
+Credit Compact). For the 46 rules this yields multipliers between 4 and 20 (mean
+15.00) and integer weights confined to $[-5, 6]$.
+
+\subsubsection{Fidelity and Agreement}
+Table~\ref{tab:scorecard_fidelity} reports, for both checkpoints and all four
+datasets, the float and scorecard accuracies, the accuracy change
+$\Delta\text{Acc} = \text{Acc}^{(\text{quant})} - \text{Acc}^{(\text{float})}$,
+the instance-level prediction agreement (Equation~\ref{eq:fidelity}), the integer
+weight range and the mean multiplier. The final block repeats the measurement for
+the protected-attribute-free COMPAS variant of
+Section~\ref{subsec:comparative_results}, whose three Compact rules appear in
+Figures~\ref{fig:arch_forward}--\ref{fig:arch_scorecard} and in the case study.
+Four observations follow.
+\begin{enumerate}
+    \item \textbf{Agreement is high but not exact.} Fidelity ranges from 95.45\%
+    (Synthetic Compact) to 100.00\% (COMPAS Compact). This is an empirical
+    property of rounding, not a theorem; unlike the bias-shifting step, integer
+    quantization does not preserve logits exactly.
+    \item \textbf{Accuracy changes are small and not systematic.} On COMPAS and
+    Adult the absolute change is at most 0.07 points; on German Credit the
+    scorecard is 1.00 point \emph{more} accurate than the float model, which is
+    within one example of noise on a 100-example test set; on Synthetic the
+    scorecard loses 0.80--1.10 points. We report the sign as measured.
+    \item \textbf{The integer range tracks the number of classes and rule
+    length.} Binary problems with short rules need only a handful of points
+    ($[-3,3]$ on COMPAS, $[-5,6]$ on German Credit Compact, $[-7,4]$ on Adult
+    Compact), whereas the 20-class problem with rules of length 6.6 requires
+    $[-20,24]$.
+    \item \textbf{Removing the protected attributes does not change the picture.}
+    With budgets chosen by the same fidelity/span criterion (10/3\% for Compact,
+    30/5\% for Global Best), the variant reaches 99.51\% (3-rule Compact) and
+    99.24\% (25-rule Global Best) agreement, with a $-0.07$-point accuracy change
+    in both cases.
+\end{enumerate}
+On every binary benchmark, including the no-protected COMPAS variant, the pruned
+model therefore admits a small-integer scorecard with at least 97\% prediction
+agreement and an accuracy change of at most one percentage point, while the output
+layer remains continuous and interpretable as signed votes.
+
+\subsection{Transparent Case Studies and Decision Diagnostics}
+\label{subsec:case_studies}
+
+\subsubsection{Pencil-and-Paper Scorecard: COMPAS}
+Figure~\ref{fig:compas_pencil_paper_scorecard}(a) lists the complete Compact model
+for the protected-attribute-free COMPAS variant: three univariate interval rules
+on \textit{priors\_count} ($\le 4.3$), \textit{juv\_misd\_count} ($\le 0.4$) and
+\textit{age} ($\le 25.6$). No rule conditions on race or sex. The output layer
+contributes signed votes per class plus a base bias ($-0.23$ for non-recidivism,
+$+0.17$ for recidivism) created by the bias-shifting step.
+
+Panel (b) audits two defendants by hand. Defendant~A (\textit{priors} = 0,
+\textit{juv\_misd\_count} = 0, \textit{age} = 40) activates $R_1$ and $R_2$ but not
+the age rule $R_3$, and the rule votes plus the bias give $+0.43$ for
+non-recidivism and $-0.64$ for recidivism, a margin of 1.07. Defendant~B
+(\textit{priors} = 5, \textit{juv\_misd\_count} = 3, \textit{age} = 19) activates
+only $R_3$, giving $-1.01$ and $+0.93$, a margin of 1.94 for recidivism. Both
+decisions match the network output exactly, because the decomposition is an
+algebraic identity rather than a surrogate. Panel (c) places the three-rule and
+25-rule models next to the baselines on the accuracy axis.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig_compas_pencil_paper_scorecard.pdf}
+\caption{Pencil-and-paper audit of the three-rule \modelname{} model on the
+protected-attribute-free COMPAS variant. (a) Rules, activation intervals and signed
+output votes; none of the rules conditions on race or sex.
+(b) Step-by-step arithmetic for a low-risk and a high-risk defendant; the
+reconstructed scores equal the network logits exactly. (c) Accuracy of the
+three-rule and 25-rule models relative to the baselines.}
+\label{fig:compas_pencil_paper_scorecard}
+\end{figure*}
+
+\subsubsection{Decision Diagnostics: German Credit}
+The same diagnostic tools apply to the German Credit model. For a rejected
+applicant with decision margin $-0.54$, the exact response curve of
+\textit{duration} crosses the boundary at $-0.17$ standard deviations, so a shift
+of $-0.42$ suffices for approval, while \textit{credit\_amount} is non-monotone
+and opens an approval corridor on roughly $[0.69, 1.87]$. The closed-form
+recourse search then returns independent single-feature interventions, the
+smallest being a reduction of \textit{residence\_since} by 0.35 and of
+\textit{duration} by 0.42 standard deviations; because each root solves a
+piecewise-linear equation, the shifts are exact for the model. Finally,
+off-diagonal Jaccard similarities between the ten most used features are at most
+0.33, consistent with the average rule length of 2.70 features: pruning decouples
+most features into short, individually auditable rules. These remain
+\emph{geometric} diagnostics, not causal claims. The three figures are given in
+Supplementary Section~S7 (Figures~S3--S5).
+
+\subsection{Stability of the Extracted Rules}
+\label{subsec:stability}
+
+A rule set that changes completely between runs is not auditable, so we retrain
+COMPAS and German Credit with five seeds, holding the split and every
+hyperparameter fixed, and compare the rule sets pairwise. Both checkpoints are
+measured. \emph{Global Best} is the validation-selected iteration, so its depth
+follows each seed's validation curve and can stop before pruning bites;
+\emph{Compact} always runs the full schedule, so all seeds are compared at the
+same sparsity. Table~\ref{tab:seed_stability} gives, for each, the overlap over
+rule \emph{signatures} and over the features used by at least one rule.
+
+The two overlaps diverge, and the divergence is the finding. For the
+validation-selected checkpoint the feature support is almost perfectly stable: on
+COMPAS every seed selects the same 13 features (Jaccard $1.00$) and on German
+Credit the overlap is $0.91 \pm 0.04$, while rule signatures barely repeat
+($0.13 \pm 0.12$ and $0.02 \pm 0.01$). Its rule count reflects the selected depth
+rather than a budget: COMPAS keeps $31.8 \pm 0.4$ of the $32$ initial units
+because validation peaks before pruning removes whole units, and German Credit
+keeps $52.4 \pm 4.0$ of $64$.
+
+The compact operating point separates what Global Best conflates. Its connection
+budget is fixed by the schedule (six weights on COMPAS, five or six observed
+across the five seeds; $134$--$135$ on German Credit), so the seed changes the
+grouping of the budget rather than its size. On COMPAS that budget becomes
+$5.0 \pm 0.7$ rules over three to five features, matching the five-rule Compact
+model of Section~\ref{subsec:comparative_results}. Rule-set overlap rises to
+$0.38 \pm 0.15$ and feature overlap falls to $0.40 \pm 0.18$: every run spends
+the same small budget on a small coherent subset, but \emph{which} subset is
+seed-dependent. On German Credit, where pruning is milder, Compact keeps
+$50.6 \pm 2.9$ of $64$ rules with overlaps close to Global Best
+($0.04 \pm 0.02$, $0.88 \pm 0.04$).
+
+This is the clearest limitation of the present work and we do not soften it. A
+rule reported for one run is one member of a family of equally accurate rules,
+not a uniquely determined explanation. The per-example decomposition of
+Section~\ref{subsec:analytical_xai} is unaffected, because it is an identity for
+whichever model is loaded; what is not guaranteed is that retraining reproduces
+the same rule list. Stability-aware pruning objectives are the natural next step.
+
+\input{generated/tab_seed_stability.tex}
+
+
+\subsection{Ablation Studies and Sensitivity Analysis}
+\label{subsec:ablations}
+
+\subsubsection{Loss Regularization and Dropout}
+Table~\ref{tab:ablation_synthetic} and Supplementary Figure~S6a
+isolate the contribution of the two $\ell_1$ penalties and of dropout on the
+Synthetic benchmark with $H_{\text{init}} = 1024$. The full model reaches 90.03\%
+with 565 surviving rules (44.8\% pruned).
+\begin{itemize}
+    \item Removing the feature penalty ($\lambda_1 = 0$) drops accuracy to
+    70.13\% ($-19.90$) with 999 rules essentially unpruned: without input
+    sparsity pruning cannot shorten rules, and both compactness and accuracy go.
+    \item Removing the output penalty ($\lambda_2 = 0$) gives 66.72\%
+    ($-23.31$) with 970 rules, so rule-level sparsity is not a by-product of
+    input pruning alone.
+    \item Removing both penalties collapses accuracy to 57.78\% ($-32.25$) with
+    1{,}003 rules.
+    \item Removing dropout slightly \emph{raises} accuracy (91.22\%, $+1.19$) and
+    prunes more aggressively (437 rules survive) but lengthens the average rule from 6.6 to 8.5
+    features; dropout is kept for rule brevity, not accuracy.
+\end{itemize}
+
+\input{generated/tab_ablation_synthetic.tex}
+
+\subsubsection{Initial Capacity}
+The initial rule pool varies the same trade-off (Supplementary Figure~S6b). With
+$H_{\text{init}} = 512$ the model reaches 75.75\% with 393 rules (23.2\% pruned);
+with $H_{\text{init}} = 1024$ it reaches 90.03\% with 565 rules; with
+$H_{\text{init}} = 2048$ it reaches 95.60\% with 688 rules (66.4\% pruned, average
+length 10.8). A larger initial pool therefore improves the quality of the
+surviving rules, consistent with the lottery-ticket view of
+pruning~\cite{frankle2018lottery}, at the cost of longer training and longer
+rules. This is a capacity--auditability trade-off, not a free improvement.
+
+\subsubsection{Empirical Validation of the Bias-Shifting Proposition}
+Table~\ref{tab:theorem1_bias_shifting} compares the exact bias-shifting
+compaction of Proposition~\ref{prop:bias_shifting} with naive removal of
+structurally empty rules. Only structurally empty rules are removed, so the only
+difference between the two variants is the bias update. With the exact shift, the
+maximum logit drift is between $8.94 \times 10^{-8}$ and $5.72 \times 10^{-6}$,
+i.e., at floating-point level plus the effect of the $10^{-4}$ emptiness
+threshold, and prediction agreement is 100.00\% on every dataset. Without the
+shift, test accuracy falls by 9.01 points on COMPAS (66.32\% $\to$ 57.31\%) and by
+2.00 points on German Credit (75.00\% $\to$ 73.00\%). On Synthetic the pruned
+output weights are already negligible, so naive removal happens to be harmless.
+The correction is therefore not cosmetic.
+
+\input{generated/tab_theorem1_bias_shifting.tex}
+
+\subsection{Limitations and Threats to Validity}
+\label{subsec:limitations}
+
+Several limitations bound the claims of this paper.
+\begin{itemize}
+    \item \textbf{Not uniformly more accurate.} On the single split \modelname{}
+    is statistically indistinguishable from the strongest baseline on COMPAS
+    (Global Best) and German Credit, but the shared folds place it 2.8--3.1 points
+    behind CatBoost on German Credit and 1.52--1.85 behind the best
+    gradient-boosted ensemble on UCI Adult ($p < 0.001$). The synthetic result
+    reflects a generator whose geometry matches convex slabs and should not be
+    generalized to arbitrary tabular data.
+    \item \textbf{Small test sets.} German Credit has 100 test examples, so one
+    example is one percentage point. Bootstrap intervals, McNemar tests and a
+    $5\times5$ cross-validation mitigate this, and the cross-validated mean is
+    reported alongside the single split.
+    \item \textbf{Single seed and split sensitivity.} The single-split numbers come
+    from one seeded run per dataset. On COMPAS and Adult the folds give a gap
+    within half a point of the single-split gap, but on German Credit the single
+    split shows parity while the folds do not, because the German budgets were
+    chosen on this 1{,}000-example dataset; we therefore treat the cross-validated
+    number as the expected German performance. Seed-level rule stability is the
+    most important remaining limitation (Section~\ref{subsec:stability}).
+    \item \textbf{Oblique rules are not automatically simple.} A rule with three or
+    more active features takes more effort to check than a univariate threshold,
+    even when the rule count is small; the German Global Best model, with 30.72
+    features per rule, shows that a low rule count alone is not sufficient for
+    auditability.
+    \item \textbf{Timing is not a controlled hardware benchmark.} Latencies come
+    from one 6-core laptop CPU and one entry-level GPU, with library-default
+    threading. They support order-of-magnitude statements, not portable speed
+    ratios. The baseline comparison covers only German Credit, whose 100-example
+    test set makes per-call overhead a large fraction of the batch time. Because
+    the compact model is stored densely, its measured latency reflects
+    $H\times N$ arithmetic; connection sparsity is an auditability property, not a
+    speedup that the current kernel exploits.
+    \item \textbf{Two operating points are test-informed.} The German Credit
+    pruning depth (14 instead of 20 iterations) and the quantization budget
+    $(\Lambda_{\max}, \tau_{tol})$ were fixed with the single split available, so
+    the single-split figures are operating points and the reported fidelity is not
+    a held-out estimate. Repeating the German Credit $5\times5$ cross-validation
+    at 20 iterations gives $72.90\pm2.47\%$ (Global Best) and $72.94\pm2.18\%$
+    (Compact), so the depth choice moves the cross-validated mean by at most 0.2
+    points. The bias-shifting step itself is exact; integer rounding is not.
+    \item \textbf{Recourse is geometric.} The closed-form roots give the nearest
+    model-boundary crossing under fixed remaining features and immutable
+    attributes; they encode no causal dependencies, costs or feasibility.
+    \item \textbf{No fairness claim.} COMPAS demonstrates transparency on a
+    high-stakes dataset. We do not evaluate group fairness, and a transparent model
+    is not automatically a fair one.
+\end{itemize}

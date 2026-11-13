@@ -1,0 +1,21 @@
+Machine learning is increasingly used for high-stakes decisions, where
+transparency is required. Tree ensembles and deep networks are accurate on tabular
+data but hard to inspect, and post-hoc tools such as SHAP and LIME are only
+local. Simpler transparent models struggle with non-linear interactions without
+growing too large to audit. We propose \modelname{} (Self-explaining Convex Operational Rule Engine), an
+inherently interpretable neural network for tabular classification. It replaces
+unbounded activations with localized triangular activations on bias-free linear
+projections, so every hidden unit defines a convex slab between two parallel
+hyperplanes: an interval rule with compact support and a signed vote per class.
+Dual $\ell_1$ regularization and iterative magnitude pruning keep the rule set
+small. We prove an \emph{exact bias-shifting property}: a rule pruned to zero
+weights has a constant baseline activation that can be absorbed into the output
+bias without changing predictions. Rule-adaptive integer quantization turns
+projection weights into small integers while the output layer stays continuous,
+so small rule sets can be scored by hand. We evaluate on COMPAS, German Credit, UCI Adult and a 20-class synthetic task.
+On the three binary datasets, compact models keep 5--46 rules with 1.2--2.7
+features per rule and 96.0--98.7\% sparsity, and the single split stays within
+2.5 points of the best of 13 baselines; under cross-validation COMPAS trails
+CatBoost by 0.4--1.1 points and German Credit by 2.8--3.1. On the synthetic task
+the models lead all baselines. Integer scorecards retain 95.45--100\% prediction
+agreement.

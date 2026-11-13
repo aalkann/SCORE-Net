@@ -1,0 +1,97 @@
+% ---------------------------------------------------------------------------
+%  Cover letter for Neurocomputing (Elsevier).
+%  Plain text; copy into the "Cover letter" field of Editorial Manager or
+%  attach as a PDF. Placeholder to complete: [Date].
+% ---------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent Ahmet Alkan and Gozde Yolcu Oztel\\
+Department of Software Engineering, Faculty of Computer and Information
+Sciences, Sakarya University\\
+Esentepe Campus, 54187 Serdivan, Sakarya, Turkey\\
+\href{mailto:ahmetalkan@sakarya.edu.tr}{ahmetalkan@sakarya.edu.tr}
+
+\vspace{1.5em}
+\noindent \today
+
+\vspace{1em}
+\noindent The Editor-in-Chief\\
+\emph{Neurocomputing}\\
+Elsevier
+
+\vspace{1.5em}
+\noindent Dear Editor,
+
+\vspace{0.5em}
+\noindent We are pleased to submit the manuscript \textbf{``SCORE-Net: Inherently
+Interpretable Tabular Classification via Localized Convex Slabs''} for
+consideration as a regular article in \emph{Neurocomputing}.
+
+\noindent\textbf{What the paper contributes.} The manuscript proposes a neural
+network architecture whose hidden units are, by construction, human-readable
+interval rules. Each unit applies a localized triangular activation to a
+bias-free linear projection, so its active region is a convex slab bounded by
+two parallel hyperplanes rather than an unbounded half-space. This gives a
+learning system whose internal state is inspectable at the level of individual
+rules, which is the contribution we believe fits the scope of the journal: the
+paper is about a neural architecture and its learning dynamics, not about
+applying an existing model to a new dataset.
+
+Three results support the claim. First, an \emph{exact bias-shifting property for pruned rules}
+(Proposition 1) shows that a rule whose input weights are pruned to zero
+can be absorbed into the output bias with zero change in the network's
+predictions; the empirical maximum logit drift is at floating-point level
+($8.94\times10^{-8}$ to $5.72\times10^{-6}$), whereas removing the same rules
+without the correction costs up to 9.01 accuracy points. Second, dual $\ell_1$
+regularization combined with iterative magnitude pruning reduces the models to
+5--46 rules on the three binary benchmarks, with 1.2--2.7 features per rule and
+96.0--98.7\% connection sparsity. Third, a rule-adaptive integer quantization
+converts projection weights into small integers while the output layer stays
+continuous, so compact rule sets can be scored by hand with 95.45--100\%
+prediction agreement.
+
+\noindent\textbf{Evaluation.} The model is compared against 13 baselines on four
+benchmarks (COMPAS, German Credit, UCI Adult, and a 20-class synthetic task)
+under a protocol in which early stopping and checkpoint selection use only the
+validation partition. Two post-hoc operating points are test-informed and are
+declared explicitly in the manuscript.
+We report stratified-bootstrap confidence intervals, paired McNemar tests, and a
+repeated stratified $5\times5$ cross-validation for every benchmark. The
+paper states plainly where the model is competitive (COMPAS Global Best and
+German Credit, where the difference is statistically indistinguishable from
+noise), where it loses on the single split (1.26--1.57 points behind gradient
+boosting on UCI Adult),
+and why the synthetic advantage should not be generalized. The German Credit
+comparison is reported on the shared cross-validation folds as well, where the
+gap to CatBoost is 2.8--3.1 points rather than the parity seen on the single split;
+we state this explicitly rather than reporting only the favorable split. Ablations isolate the
+contribution of each loss term and of the initial capacity, and a separate
+experiment validates the bias-shifting proposition against naive rule removal.
+
+\noindent\textbf{Reproducibility and declarations.} All hyperparameters are fixed
+per dataset and registered in the released code; the scripts that regenerate
+every table and figure accompany the submission. The manuscript is not under
+consideration elsewhere, has not been published previously, and both authors
+approve its submission. The authors declare no competing interests. All real
+datasets used are public and cited, and no new human-subject data were
+collected; the synthetic benchmark is fully reproducible from the released
+generator. The use of an AI-assisted writing tool for language editing is
+declared in the manuscript, as required by Elsevier policy.
+
+\vspace{0.5em}
+\noindent Thank you for considering this manuscript. We look forward to the
+reviewers' comments.
+
+\vspace{1.5em}
+\noindent Sincerely,\\
+Ahmet Alkan (corresponding author), on behalf of both authors
+
+\end{document}

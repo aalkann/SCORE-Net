@@ -1,0 +1,5 @@
+dataset,variant,prune_iters,n_folds,cv_mean,cv_std,source
+German Credit,Global Best,14,25,72.72000002861023,2.7804379096259364,cv_german.csv
+German Credit,Compact,14,25,73.01999998092651,2.7098582206075084,cv_german.csv
+German Credit,Global Best,20,25,72.90000057220459,2.466441686918212,rerun with dataclasses.replace
+German Credit,Compact,20,25,72.94000053405762,2.1809782455535993,rerun with dataclasses.replace

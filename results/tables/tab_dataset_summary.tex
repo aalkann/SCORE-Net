@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering
+\caption{Summary of benchmark datasets. Train/validation/test counts follow the stratified protocol registered for each dataset (COMPAS: 72/8/20; German Credit: 80/10/10; UCI Adult: 72/8/20; Synthetic: 72/8/20).}
+\label{tab:dataset_summary}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l ccccc l}
+\toprule
+\textbf{Dataset} & \textbf{Samples ($M$)} & \textbf{Features ($N$)} & \textbf{Classes ($C$)} & \textbf{Train / Val / Test} & \textbf{Test Share} & \textbf{Domain} \\
+\midrule
+COMPAS & 7,214 & 13 & 2 & 5,193 / 578 / 1,443 & 20\% & Criminal Justice \\
+German Credit & 1,000 & 48 & 2 & 800 / 100 / 100 & 10\% & Credit Underwriting \\
+UCI Adult & 45,222 & 97 & 2 & 32,559 / 3,618 / 9,045 & 20\% & Socio-Economic \\
+Synthetic & 20,000 & 30 & 20 & 14,400 / 1,600 / 4,000 & 20\% & Multiclass Benchmark \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

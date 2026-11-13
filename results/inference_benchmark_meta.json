@@ -1,0 +1,9 @@
+{
+  "n_warmup": 50,
+  "n_batch_runs": 100,
+  "n_single_runs": 500,
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "torch": "2.6.0+cu124",
+  "cuda": true,
+  "gpu": "NVIDIA GeForce GTX 1650"
+}

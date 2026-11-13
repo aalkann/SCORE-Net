@@ -1,0 +1,16 @@
+\begin{table}[!b]
+\centering
+\caption{Offline training cost. \modelname{} is the mean $\pm$ standard deviation of the full pruning trajectory (base fit plus 14--20 stages); per stage divides this by the number of stages. Baselines are the median and minimum over the 13 models. The two are not a like-for-like speed ratio.}
+\label{tab:train_cost}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l r c c c c}
+\toprule
+\textbf{Dataset} & \textbf{Fold $M_{\text{train}}$} & \textbf{\modelname{} trajectory (min)} & \textbf{Per stage (s)} & \textbf{Baseline median} & \textbf{Baseline min} \\
+\midrule
+COMPAS & 4,616 & 2.9$\pm$0.60 & 8.80 & 0.11\,s & 0.01\,s \\
+German Credit & 640 & 0.23$\pm$0.03 & 0.93 & 0.03\,s & $<$0.01\,s \\
+UCI Adult & 28,941 & 5.2$\pm$0.58 & 19.65 & 2.80\,s & 0.02\,s \\
+Synthetic & 12,800 & 7.9$\pm$0.91 & 22.63 & 27.74\,s & 0.01\,s \\
+\bottomrule
+\end{tabular}
+\end{table}

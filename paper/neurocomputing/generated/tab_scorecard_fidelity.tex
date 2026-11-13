@@ -1,0 +1,30 @@
+\begin{table*}[!tb]
+\centering
+\footnotesize
+\caption{Float versus rule-level integer scorecard. Only $W_f$ is quantized; $W_o$ stays continuous. Fidelity is instance-level prediction agreement and $\Delta\text{Acc}$ is the difference of the two displayed accuracies. The last block is the no-protected COMPAS variant.}
+\label{tab:scorecard_fidelity}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{3pt}
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{llccccccc}
+\toprule
+\textbf{Dataset} & \textbf{Variant} & \textbf{Rules ($H^*$)} & \textbf{Float Acc (\%)} & \textbf{Scorecard Acc (\%)} & \textbf{$\Delta$ Acc (\%)} & \textbf{Fidelity (\%)} & \textbf{Weight Range} & \textbf{Mean $\bar{\lambda}$} \\
+\midrule
+\multirow{2}{*}{COMPAS} & Global Best & 11 & 68.33 & 68.40 & +0.07 & 99.79 & $[-3, 3]$ & 6.27 \\
+ & Compact & 5 & 66.32 & 66.32 & 0.00 & 100.00 & $[-3, 3]$ & 7.60 \\
+\midrule
+\multirow{2}{*}{German Credit} & Global Best & 64 & 76.00 & 77.00 & +1.00 & 97.00 & $[-9, 8]$ & 29.11 \\
+ & Compact & 46 & 75.00 & 76.00 & +1.00 & 97.00 & $[-5, 6]$ & 15.00 \\
+\midrule
+\multirow{2}{*}{UCI Adult} & Global Best & 51 & 85.30 & 85.36 & +0.06 & 98.76 & $[-8, 7]$ & 35.29 \\
+ & Compact & 43 & 85.61 & 85.54 & -0.07 & 99.40 & $[-7, 4]$ & 25.02 \\
+\midrule
+\multirow{2}{*}{Synthetic} & Global Best & 788 & 95.78 & 94.68 & -1.10 & 96.63 & $[-21, 22]$ & 138.97 \\
+ & Compact & 565 & 90.03 & 89.23 & -0.80 & 95.45 & $[-20, 24]$ & 106.88 \\
+\midrule
+\multirow{2}{*}{COMPAS (no sex/race)} & Global Best & 25 & 68.68 & 68.61 & -0.07 & 99.24 & $[-7, 7]$ & 16.80 \\
+ & Compact & 3 & 66.67 & 66.60 & -0.07 & 99.51 & $[-1, 3]$ & 5.00 \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

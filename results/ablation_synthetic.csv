@@ -1,0 +1,8 @@
+Variant,Group,Is Reference,Initial H,Pruned Rules (H*),Rule Pruning (%),Test Acc (%),Feat Sparsity (%),Avg Feats/Rule,Global Acc (%),Global Rules,Delta Acc (%),Capacity Label,Capacity TeX Label
+"SCORE-Net (Full Dual $L_1$, H=1024)",regularization,True,1024,565,44.8,90.03,78.0,6.6,95.78,788,0.0,,"SCORE-Net (Full Dual $L_1$, H=1024)"
+No Dropout ($p = 0.0$),regularization,False,1024,437,57.3,91.22,71.5,8.5,94.67,507,1.19,,No Dropout ($p = 0.0$)
+No Feature $L_1$ ($\lambda_1 = 0$),regularization,False,1024,999,2.4,70.13,87.8,3.7,93.1,1024,-19.9,,No Feature $L_1$ ($\lambda_1 = 0$)
+No Output $L_1$ ($\lambda_2 = 0$),regularization,False,1024,970,5.3,66.72,87.2,3.9,80.0,996,-23.31,,No Output $L_1$ ($\lambda_2 = 0$)
+No $L_1$ Loss ($\lambda_1 = \lambda_2 = 0$),regularization,False,1024,1003,2.1,57.78,87.6,3.7,67.8,1024,-32.25,,No $L_1$ Loss ($\lambda_1 = \lambda_2 = 0$)
+Low Capacity ($H=512$),capacity,False,512,393,23.2,75.75,84.2,4.8,94.33,507,-14.28,Low Capacity (H = 512),Low Capacity ($H=512$)
+High Capacity ($H=2048$),capacity,False,2048,688,66.4,95.6,63.9,10.8,96.32,709,5.57,High Capacity (H = 2048),High Capacity ($H=2048$)

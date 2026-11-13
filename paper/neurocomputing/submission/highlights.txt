@@ -1,0 +1,5 @@
+SCORE-Net is an interpretable neural network built from readable interval rules
+Each hidden unit fires only inside a bounded convex region, unlike standard neurons
+Sparsity penalties and iterative pruning keep the rule set small and auditable
+Pruned rules are removed exactly by moving their effect into the output bias
+Accuracy is within 2.5 points of the best of 13 baselines; scorecards agree 95%+

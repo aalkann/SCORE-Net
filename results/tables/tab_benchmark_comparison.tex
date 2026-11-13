@@ -1,0 +1,33 @@
+\begin{table*}[t]
+\centering
+\caption{Test accuracy, macro-F1 and ROC-AUC (\%) against 13 baselines. Best per family in bold, best per dataset underlined.}
+\label{tab:benchmark_comparison}
+\small
+\setlength{\tabcolsep}{2.0pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{ll ccc ccc ccc ccc}
+\toprule
+\multirow{2}{*}{\textbf{Family}} & \multirow{2}{*}{\textbf{Model}} & \multicolumn{3}{c}{\textbf{COMPAS}} & \multicolumn{3}{c}{\textbf{German Credit}} & \multicolumn{3}{c}{\textbf{UCI Adult}} & \multicolumn{3}{c}{\textbf{Synthetic}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11} \cmidrule(lr){12-14}
+ & & \textbf{Acc} & \textbf{F1} & \textbf{AUC} & \textbf{Acc} & \textbf{F1} & \textbf{AUC} & \textbf{Acc} & \textbf{F1} & \textbf{AUC} & \textbf{Acc} & \textbf{F1} & \textbf{AUC} \\
+\midrule
+\multirow{4}{*}{\shortstack[l]{\textbf{Inherently Interpretable}}} & Logistic Regression & \underline{\textbf{68.75}} & 67.13 & \textbf{73.22} & \textbf{73.00} & \textbf{66.14} & \textbf{74.33} & 84.78 & 78.15 & 90.43 & 29.85 & 29.64 & 82.26 \\
+ & Decision Tree & 66.94 & 64.93 & 71.96 & 72.00 & 50.39 & 68.00 & 84.46 & 76.81 & 88.16 & 23.05 & 22.93 & 68.23 \\
+ & EBM (InterpretML) & 67.98 & \textbf{67.17} & 73.10 & 72.00 & 64.49 & 71.00 & \textbf{86.69} & \textbf{81.10} & \textbf{92.52} & \textbf{32.27} & \textbf{31.99} & \textbf{84.44} \\
+ & Naive Bayes & 63.48 & 59.19 & 67.13 & 47.00 & 46.95 & 61.24 & 59.36 & 58.66 & 74.78 & 31.10 & 30.86 & 83.63 \\
+\midrule
+\multirow{6}{*}{\shortstack[l]{\textbf{SOTA Tree}\\\textbf{Ensembles}}} & XGBoost & 67.50 & 66.67 & 72.47 & 70.00 & 63.57 & 73.29 & 86.66 & 81.16 & 92.61 & 61.75 & 61.68 & 95.42 \\
+ & LightGBM & 67.22 & 66.32 & 72.28 & 72.00 & \textbf{66.00} & 73.10 & 86.69 & 81.11 & \underline{\textbf{92.65}} & 63.65 & 63.60 & 95.62 \\
+ & CatBoost & \textbf{68.40} & \textbf{67.36} & \underline{\textbf{73.40}} & 73.00 & 64.47 & 76.43 & 86.80 & 81.17 & 92.59 & \textbf{65.35} & \textbf{65.34} & \textbf{96.33} \\
+ & Random Forest & 67.15 & 66.32 & 72.66 & \underline{\textbf{76.00}} & 65.03 & \underline{\textbf{76.57}} & 85.74 & 78.96 & 91.42 & 58.23 & 58.19 & 93.91 \\
+ & Gradient Boosting & 66.94 & 64.54 & 72.67 & 69.00 & 60.21 & 73.48 & \underline{\textbf{86.87}} & \underline{\textbf{81.49}} & 92.63 & 54.20 & 54.13 & 93.69 \\
+ & AdaBoost & 66.81 & 65.76 & 73.05 & 72.00 & 65.28 & 72.05 & 85.73 & 79.26 & 91.32 & 50.85 & 50.84 & 92.29 \\
+\midrule
+\multirow{5}{*}{\shortstack[l]{\textbf{Geometric \&}\\\textbf{Deep Models}}} & SVM (RBF) & 67.15 & 65.91 & 71.46 & 73.00 & 63.51 & 71.90 & 84.16 & 77.43 & 88.37 & 65.38 & 65.36 & 96.61 \\
+ & KNN & 65.84 & 64.16 & 70.83 & 71.00 & 53.81 & 67.74 & 82.21 & 74.74 & 86.07 & 56.10 & 56.00 & 92.74 \\
+ & MLP (sklearn) & 67.57 & 66.90 & \textbf{73.14} & 70.00 & 41.18 & 52.76 & 84.75 & 78.35 & 90.18 & 71.75 & 71.74 & 97.59 \\
+ & \modelname{} (Global Best) & \textbf{68.33} & \underline{\textbf{67.81}} & 72.82 & \underline{\textbf{76.00}} & \underline{\textbf{68.00}} & 70.71 & 85.30 & 79.15 & \textbf{91.28} & \underline{\textbf{95.78}} & \underline{\textbf{95.77}} & \underline{\textbf{99.54}} \\
+ & \modelname{} (Compact) & 66.32 & 65.71 & 70.92 & 75.00 & 67.91 & \textbf{75.05} & \textbf{85.61} & \textbf{79.35} & 91.18 & 90.03 & 90.02 & 99.34 \\
+\bottomrule
+\end{tabular}
+\end{table*}

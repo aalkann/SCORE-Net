@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article below."
+title: "SCORE-Net: Inherently Interpretable Tabular Classification via Localized Convex Slabs"
+abstract: >-
+  Reference implementation of SCORE-Net, an inherently interpretable neural
+  network for tabular classification whose hidden units are localized convex
+  slabs (oblique interval rules). Includes the training and iterative magnitude
+  pruning pipeline, exact bias shifting for pruned rules, rule-level integer
+  quantization, the analytical interpretability tools, and every script and
+  notebook that regenerates the tables and figures of the manuscript.
+repository-code: "https://github.com/aalkann/XAI-Simple-Rule-Learner-SCORENet"
+authors:
+  - family-names: Alkan
+    given-names: Ahmet
+    affiliation: "Sakarya University, Department of Software Engineering"
+    email: ahmetalkan@sakarya.edu.tr
+    orcid: "https://orcid.org/0009-0006-4919-8080"
+  - family-names: Yolcu Oztel
+    given-names: Gozde
+    affiliation: "Sakarya University, Department of Software Engineering"
+    email: gyolcu@sakarya.edu.tr
+    orcid: "https://orcid.org/0000-0002-7841-2131"
+license: MIT
+version: 1.0.0
+date-released: "2026-10-29"
+keywords:
+  - interpretable machine learning
+  - explainable artificial intelligence
+  - tabular classification
+  - scorecards
+  - neural network pruning

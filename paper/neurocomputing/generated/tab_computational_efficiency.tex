@@ -1,0 +1,26 @@
+\begin{table*}[t]
+\centering
+\footnotesize
+\caption{Computational resource profile and dual-device inference latency of \modelname{}. Latencies are means $\pm$ standard deviations over $N=100$ batch and $N=500$ single-query runs after 50 warmups; batch time divided by test-set size gives the amortized per-instance cost compared with the baselines in Supplementary Table~S4.}
+\label{tab:computational_efficiency}
+\setlength{\tabcolsep}{2pt}
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{ll c c ccc c cc}
+\toprule
+\textbf{Dataset} & \textbf{Variant} & \textbf{Test $N$} & \textbf{Acc (\%)} & \textbf{Rules} & \textbf{Avg Len} & \textbf{Sparsity (\%)} & \textbf{Active params} & \textbf{CPU [ms\,/\,$\mu$s]} & \textbf{GPU [ms\,/\,$\mu$s]} \\
+\midrule
+COMPAS & Global Best & 1,443 & 68.33 & 11/32 & 1.27 & 96.6\% & 60 & 0.13$\pm$0.00 / 63.3$\pm$8.3 & 0.36$\pm$0.01 / 354.6$\pm$11.6 \\
+COMPAS & Compact & 1,443 & 66.32 & 5/32 & 1.20 & 98.6\% & 28 & 0.12$\pm$0.00 / 62.5$\pm$8.4 & 0.36$\pm$0.01 / 356.2$\pm$18.6 \\
+\midrule
+German Credit & Global Best & 100 & 76.00 & 64/64 & 30.72 & 36.0\% & 2,224 & 0.08$\pm$0.00 / 59.4$\pm$6.5 & 0.35$\pm$0.01 / 346.8$\pm$21.1 \\
+German Credit & Compact & 100 & 75.00 & 46/64 & 2.70 & 96.0\% & 310 & 0.08$\pm$0.00 / 61.6$\pm$5.3 & 0.36$\pm$0.01 / 357.4$\pm$14.7 \\
+\midrule
+UCI Adult & Global Best & 9,045 & 85.30 & 51/64 & 6.86 & 94.4\% & 556 & 0.46$\pm$0.02 / 64.2$\pm$4.0 & 0.43$\pm$0.00 / 358.1$\pm$10.4 \\
+UCI Adult & Compact & 9,045 & 85.61 & 43/64 & 1.91 & 98.7\% & 256 & 0.39$\pm$0.01 / 65.4$\pm$4.7 & 0.48$\pm$0.00 / 359.8$\pm$11.4 \\
+\midrule
+Synthetic & Global Best & 4,000 & 95.78 & 788/1024 & 26.29 & 32.6\% & 24,407 & 8.99$\pm$1.15 / 80.7$\pm$8.3 & 1.52$\pm$0.01 / 366.0$\pm$18.4 \\
+Synthetic & Compact & 4,000 & 90.03 & 565/1024 & 6.61 & 87.8\% & 15,199 & 6.72$\pm$1.04 / 84.4$\pm$10.0 & 1.00$\pm$0.02 / 383.6$\pm$18.1 \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

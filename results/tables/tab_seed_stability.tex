@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{Rule-set stability over five seeds (means over the 10 seed pairs). \emph{Global Best} is the validation-selected iteration; \emph{Compact} runs the full schedule. \emph{Rule set} and \emph{Features} are Jaccard overlaps over rule signatures and over the features used by at least one rule; \emph{Links} is the surviving weight count.}
+\label{tab:seed_stability}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{l l c c c c c}
+\toprule
+\textbf{Dataset} & \textbf{Checkpoint} & \textbf{Rules ($H^*$/$H_0$)} & \textbf{Links} & \textbf{Rule set} & \textbf{Features} & \textbf{Acc (\%)} \\
+\midrule
+\multirow{2}{*}{COMPAS} & Global Best & 31.8$\pm$0.4 / 32 & 266--414 & 0.13$\pm$0.12 & 1.00$\pm$0.00 & 67.14$\pm$0.41 \\
+ & Compact & 5.0$\pm$0.7 / 32 & 5--6 & 0.38$\pm$0.15 & 0.40$\pm$0.18 & 66.03$\pm$0.56 \\
+\multirow{2}{*}{German Credit} & Global Best & 52.4$\pm$4.0 / 64 & 134--210 & 0.02$\pm$0.01 & 0.91$\pm$0.04 & 72.00$\pm$2.00 \\
+ & Compact & 50.6$\pm$2.9 / 64 & 134--135 & 0.04$\pm$0.02 & 0.88$\pm$0.04 & 72.80$\pm$3.03 \\
+\bottomrule
+\end{tabular}
+\end{table*}

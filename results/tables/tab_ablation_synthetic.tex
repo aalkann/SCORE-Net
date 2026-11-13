@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering
+\caption{Ablation study on the multi-class Synthetic benchmark (20 classes, 30 features). We vary individual loss regularization components and the initial model capacity $H$ and report test accuracy, rule pruning, feature sparsity and average rule length.}
+\label{tab:ablation_synthetic}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{l ccc ccc c}
+\toprule
+\textbf{Ablation Variant} & \textbf{Initial $H$} & \textbf{Pruned $H^*$} & \textbf{Pruning (\%)} & \textbf{Feat. Sparsity (\%)} & \textbf{Avg. Feat/Rule} & \textbf{Test Acc. (\%)} & \textbf{$\Delta$ Acc. (\%)} \\
+\midrule
+\multicolumn{8}{l}{\textit{\textbf{Loss Regularization and Dropout Ablation ($H_{\text{init}}=1024$)}}} \\
+SCORE-Net (Full Dual $L_1$, H=1024) & 1024 & 565 & 44.8\% & 78.0\% & 6.6 & \textbf{90.03\%} & \textit{Baseline} \\
+No Dropout ($p = 0.0$) & 1024 & 437 & 57.3\% & 71.5\% & 8.5 & 91.22\% & +1.19\% \\
+No Feature $L_1$ ($\lambda_1 = 0$) & 1024 & 999 & 2.4\% & 87.8\% & 3.7 & 70.13\% & -19.90\% \\
+No Output $L_1$ ($\lambda_2 = 0$) & 1024 & 970 & 5.3\% & 87.2\% & 3.9 & 66.72\% & -23.31\% \\
+No $L_1$ Loss ($\lambda_1 = \lambda_2 = 0$) & 1024 & \textbf{1003} & 2.1\% & 87.6\% & 3.7 & 57.78\% & -32.25\% \\
+\midrule
+\multicolumn{8}{l}{\textit{\textbf{Initial Capacity Scaling ($H$)}}} \\
+Low Capacity ($H=512$) & 512 & 393 & 23.2\% & 84.2\% & 4.8 & 75.75\% & -14.28\% \\
+Standard Capacity ($H=1024$) & 1024 & 565 & 44.8\% & 78.0\% & 6.6 & \textbf{90.03\%} & \textit{Baseline} \\
+High Capacity ($H=2048$) & 2048 & \textbf{688} & 66.4\% & 63.9\% & 10.8 & 95.60\% & +5.57\% \\
+\bottomrule
+\end{tabular}
+\end{table*}

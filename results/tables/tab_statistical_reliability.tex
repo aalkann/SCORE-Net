@@ -1,0 +1,25 @@
+\begin{table*}[t]
+\centering
+\caption{Stratified-bootstrap $95\%$ confidence intervals, validation--test gap and paired McNemar test against the strongest baseline (listed beneath the table). Test sets range from $M_{\text{test}}=100$ to $M_{\text{test}}=9{,}045$, so a bare accuracy is not comparable across datasets. $p>0.05$ means the difference is not distinguishable from sampling noise.}
+\label{tab:statistical_reliability}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{ll c cc cc c c}
+\toprule
+\textbf{Dataset} & \textbf{Variant} & \textbf{Test $M$} & \textbf{Acc (\%) [95\% CI]} & \textbf{Macro-F1 [95\% CI]} & \textbf{Val Acc [95\% CI]} & \textbf{Val$-$Test} & \textbf{$\Delta$ (pp)} & \textbf{McNemar $p$} \\
+\midrule
+\multirow{2}{*}{COMPAS} & Global Best & 1,443 & 68.33 [65.90, 70.76] & 67.81 [65.33, 70.26] & 70.59 [66.96, 74.22] & +2.26 & -0.42 & 0.714 \\
+ & Compact & 1,443 & 66.32 [63.89, 68.75] & 65.71 [63.16, 68.21] & 69.72 [65.92, 73.36] & +3.40 & -2.43 & 0.018 \\
+\midrule
+\multirow{2}{*}{German Credit} & Global Best & 100 & 76.00 [68.00, 83.00] & 68.00 [57.04, 78.18] & 79.00 [72.00, 86.00] & +3.00 & +0.00 & 1.000 \\
+ & Compact & 100 & 75.00 [67.00, 82.02] & 67.91 [57.64, 77.69] & 76.00 [68.00, 83.00] & +1.00 & -1.00 & 1.000 \\
+\midrule
+\multirow{2}{*}{UCI Adult} & Global Best & 9,045 & 85.30 [84.63, 85.98] & 79.15 [78.17, 80.15] & 86.18 [85.13, 87.20] & +0.88 & -1.57 & $<0.001$ \\
+ & Compact & 9,045 & 85.61 [84.95, 86.26] & 79.35 [78.39, 80.32] & 85.57 [84.55, 86.65] & -0.03 & -1.26 & $<0.001$ \\
+\midrule
+\multirow{2}{*}{Synthetic} & Global Best & 4,000 & 95.78 [95.17, 96.38] & 95.77 [95.17, 96.38] & 96.38 [95.44, 97.31] & +0.60 & +24.03 & $<0.001$ \\
+ & Compact & 4,000 & 90.03 [89.12, 90.97] & 90.02 [89.11, 90.98] & 89.19 [87.69, 90.75] & -0.84 & +18.28 & $<0.001$ \\
+\bottomrule
+\end{tabular}
+\par\vspace{1pt}
+{\footnotesize Best baseline per dataset (highest observed test accuracy): \textbf{COMPAS}: Logistic Regression (68.75\%); \textbf{German Credit}: Random Forest (76.00\%); \textbf{UCI Adult}: Gradient Boosting (86.87\%); \textbf{Synthetic}: MLP (sklearn) (71.75\%).}
+\end{table*}

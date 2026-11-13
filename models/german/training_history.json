@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "H_init": 64,
+  "num_prune_iters": 14,
+  "prune_amount_feature": 0.2,
+  "prune_amount_output": 0.0,
+  "iterations": [
+    {
+      "iteration": 0,
+      "phase": "base",
+      "feature_sparsity_pct": 0.0,
+      "val_accuracy": 0.71,
+      "active_rules": 64
+    },
+    {
+      "iteration": 1,
+      "phase": "prune",
+      "feature_sparsity_pct": 19.986979166666668,
+      "val_accuracy": 0.8,
+      "active_rules": 64
+    },
+    {
+      "iteration": 2,
+      "phase": "prune",
+      "feature_sparsity_pct": 36.002604166666664,
+      "val_accuracy": 0.79,
+      "active_rules": 64
+    },
+    {
+      "iteration": 3,
+      "phase": "prune",
+      "feature_sparsity_pct": 48.795572916666664,
+      "val_accuracy": 0.78,
+      "active_rules": 64
+    },
+    {
+      "iteration": 4,
+      "phase": "prune",
+      "feature_sparsity_pct": 59.049479166666664,
+      "val_accuracy": 0.77,
+      "active_rules": 64
+    },
+    {
+      "iteration": 5,
+      "phase": "prune",
+      "feature_sparsity_pct": 67.25260416666667,
+      "val_accuracy": 0.76,
+      "active_rules": 64
+    },
+    {
+      "iteration": 6,
+      "phase": "prune",
+      "feature_sparsity_pct": 73.79557291666667,
+      "val_accuracy": 0.74,
+      "active_rules": 64
+    },
+    {
+      "iteration": 7,
+      "phase": "prune",
+      "feature_sparsity_pct": 79.03645833333333,
+      "val_accuracy": 0.73,
+      "active_rules": 64
+    },
+    {
+      "iteration": 8,
+      "phase": "prune",
+      "feature_sparsity_pct": 83.23567708333333,
+      "val_accuracy": 0.72,
+      "active_rules": 64
+    },
+    {
+      "iteration": 9,
+      "phase": "prune",
+      "feature_sparsity_pct": 86.58854166666667,
+      "val_accuracy": 0.77,
+      "active_rules": 64
+    },
+    {
+      "iteration": 10,
+      "phase": "prune",
+      "feature_sparsity_pct": 89.2578125,
+      "val_accuracy": 0.73,
+      "active_rules": 62
+    },
+    {
+      "iteration": 11,
+      "phase": "prune",
+      "feature_sparsity_pct": 91.40625,
+      "val_accuracy": 0.69,
+      "active_rules": 60
+    },
+    {
+      "iteration": 12,
+      "phase": "prune",
+      "feature_sparsity_pct": 93.13151041666667,
+      "val_accuracy": 0.69,
+      "active_rules": 58
+    },
+    {
+      "iteration": 13,
+      "phase": "prune",
+      "feature_sparsity_pct": 94.49869791666667,
+      "val_accuracy": 0.72,
+      "active_rules": 57
+    },
+    {
+      "iteration": 14,
+      "phase": "prune",
+      "feature_sparsity_pct": 95.60546875,
+      "val_accuracy": 0.76,
+      "active_rules": 52
+    }
+  ],
+  "global_best_iteration": 2,
+  "smoothed_score": 0.79,
+  "selection": "smoothed",
+  "final_iteration": 14,
+  "global_best_val_accuracy": 0.79,
+  "final_val_accuracy": 0.76
+}

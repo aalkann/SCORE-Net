@@ -1,0 +1,137 @@
+%% ---------------------------------------------------------------------------
+%%  Neurocomputing (Elsevier) submission version of SCORE-Net
+%%  Class: elsarticle (Elsevier). Reference style: Elsevier numbered.
+%%
+%%  Build:   latexmk -pdf main.tex      (or ./build.sh)
+%%  NOTE:    All files of the flattened submission archive must sit in ONE
+%%           folder; Editorial Manager cannot process subfolders.
+%% ---------------------------------------------------------------------------
+\documentclass[5p,10pt]{elsarticle}
+
+% --- Encoding and fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% --- Mathematics ---
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb}
+
+% --- Times-like fonts (matches Elsevier's published style) ---
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% --- Graphics and tables ---
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{adjustbox}
+
+% --- Misc ---
+\usepackage{url}
+\usepackage{microtype}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[hidelinks]{hyperref}
+% Allow long DOIs/URLs in the reference list to break at any character.
+\usepackage{xurl}
+
+% Narrow two-column measure: let TeX stretch interword space a little before
+% it produces an overfull line.
+\setlength{\emergencystretch}{2em}
+
+% --- Float placement tuning ---
+% Double-column floats (table*, figure*) need two things that the elsarticle
+% defaults do not provide:
+%   * dblfloatfix: respects [b] for double-column floats. Without it, a float
+%     declared [!b] is silently ignored and is deferred to the end of the
+%     document, i.e. after the reference list.
+%   * a raised \dbltopnumber: by default only two double-column floats may sit
+%     at the top of a page, so a paper with 17 of them backs up and the queue
+%     is flushed by \end{document}, again after the references.
+\usepackage{dblfloatfix}
+\setcounter{dbltopnumber}{3}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.75}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.85}
+
+% --- Theorem environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+% --- Custom macros ---
+\newcommand{\modelname}{\textsc{SCORE-Net}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+
+\journal{Neurocomputing}
+
+% Many floats: allow pages to end short instead of stretching the body
+% to the exact bottom, which produced an overfull vbox on float-heavy pages.
+\raggedbottom
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{\modelname: Inherently Interpretable Tabular Classification via
+Localized Convex Slabs}
+
+%% Author affiliation verified against the Sakarya University staff directory
+%% (seng.sakarya.edu.tr) and the authors' public ORCID records.
+\author[a]{Ahmet Alkan\corref{cor1}\fnref{orcidA}}
+\ead{ahmetalkan@sakarya.edu.tr}
+\fntext[orcidA]{ORCID: 0009-0006-4919-8080.}
+\author[a]{Gozde Yolcu Oztel\fnref{orcidB}}
+\ead{gyolcu@sakarya.edu.tr}
+\fntext[orcidB]{ORCID: 0000-0002-7841-2131.}
+\cortext[cor1]{Corresponding author.}
+\address[a]{Department of Software Engineering, Faculty of Computer and
+Information Sciences, Sakarya University, Esentepe Campus, 54187 Serdivan,
+Sakarya, Turkey}
+
+\begin{abstract}
+\input{sections/abstract.tex}
+\end{abstract}
+
+\begin{keyword}
+Interpretable machine learning \sep Explainable artificial intelligence \sep
+Tabular data \sep Scorecards \sep Neural network pruning \sep
+Trustworthy artificial intelligence
+\end{keyword}
+
+\end{frontmatter}
+
+% --- Section 1: Introduction ---
+\input{sections/introduction.tex}
+
+% --- Section 2: Related Work ---
+\input{sections/related_work.tex}
+
+% --- Section 3: Methodology ---
+\input{sections/methodology.tex}
+
+% --- Section 4: Experiments and Results ---
+\input{sections/experiments.tex}
+
+% --- Section 5: Conclusion ---
+\input{sections/conclusion.tex}
+
+% --- Declarations (CRediT, competing interests, data, generative AI, funding) ---
+\input{sections/declarations.tex}
+
+% --- Bibliography ---
+% Tighten the inter-entry spacing so the list ends on the last text page;
+% the font size itself is unchanged.
+\setlength{\bibsep}{0pt}
+\renewcommand{\bibfont}{\small}
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}

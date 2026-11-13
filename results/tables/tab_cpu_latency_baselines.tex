@@ -1,0 +1,31 @@
+\begin{table*}[!t]
+\centering
+\caption{Host CPU inference latency on the German Credit test set ($M_{\text{test}} = 100$). The last column is batch latency divided by $M_{\text{test}}$, an \emph{amortized} per-instance cost; each model is timed through its own prediction API.}
+\label{tab:cpu_latency_baselines}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Model} & \textbf{Category} & \textbf{Accuracy (\%)} & \textbf{CPU Batch (ms)} & \textbf{Amortized per-Sample ($\mu$s)} \\
+\midrule
+Random Forest & SOTA Ensemble & 76.00 & 24.42 & 244.2 \\
+\textbf{\modelname{} (Global)} & Glass-Box & 76.00 & 0.08 & 0.8 \\
+\textbf{\modelname{} (Compact)} & Glass-Box & 75.00 & 0.08 & 0.8 \\
+SVM (RBF) & Geometric \& DL & 73.00 & 2.46 & 24.6 \\
+Logistic Regression & Interpretable & 73.00 & 0.14 & 1.4 \\
+CatBoost & SOTA Ensemble & 73.00 & 0.35 & 3.5 \\
+Decision Tree & Interpretable & 72.00 & 0.11 & 1.1 \\
+AdaBoost & SOTA Ensemble & 72.00 & 36.48 & 364.8 \\
+EBM (InterpretML) & Interpretable & 72.00 & 0.75 & 7.5 \\
+LightGBM & SOTA Ensemble & 72.00 & 0.81 & 8.1 \\
+KNN & Geometric \& DL & 71.00 & 1.57 & 15.7 \\
+MLP (sklearn) & Geometric \& DL & 70.00 & 0.18 & 1.8 \\
+XGBoost & SOTA Ensemble & 70.00 & 0.35 & 3.5 \\
+Gradient Boosting & SOTA Ensemble & 69.00 & 0.40 & 4.0 \\
+Naive Bayes & Interpretable & 47.00 & 0.16 & 1.6 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\footnotesize\emph{Note.} One query costs 59.4~$\mu$s for the Global Best variant and 61.6~$\mu$s for the Compact variant; baseline single queries were not measured. Baseline batch times are single means, so differences below about 0.5~$\mu$s are within measurement noise. SCORE-Net batch times are forward passes; baselines use their native \texttt{predict} call.
+\end{table*}
