@@ -22,6 +22,7 @@ Sources for every item below are listed in `README.md` under
 | `main.bbl` | compiled bibliography (after build) | Manuscript |
 | `main.pdf` | compiled manuscript (proof) | (proof only) |
 | `submission/highlights.txt` / `.docx` | 5 highlights, ≤85 chars each | Highlights |
+| `submission/abstract.docx` / `.pdf` | standalone abstract (239 words) for the new service's required "Abstract" slot | Abstract |
 | `submission/cover_letter.tex` / `.pdf` | cover letter | Cover Letter |
 | `supplementary.tex` / `submission/SCORE-Net_supplementary.pdf` | standalone supplement | Supplementary Material |
 | `submission/SCORE-Net_submission.zip` | the 33 LaTeX source files above, flattened and pre-ordered for EM (no build artifacts, `main.tex` first) | uploaded as one archive at Attach Files |
@@ -121,43 +122,46 @@ to confirm it still builds before zipping.
 
 ---
 
-## 6. Upload to Editorial Manager
+## 6. Upload in the new submission service
 
-Neurocomputing's Guide for Authors says a PDF is **not** an acceptable source
-file, so the `.tex` source has to be uploaded and Editorial Manager (TeX Live
-2024) builds the review PDF itself. Per Elsevier's LaTeX instructions, when the
-PDF version is restricted the item types are: **Manuscript** for `.tex`, `.bbl`,
-`.bib`, `.cls`, `.sty`; **Figure** for images; **Table** for tables in `.tex`.
+Neurocomputing now uses Elsevier's **new submission service**
+(`submit.elsevier.com/NEUCOM`), not the classic Editorial Manager upload screen.
+The submission is managed in EM only after it has been sent.
 
-Fastest route — upload `submission/SCORE-Net_submission.zip` as one archive. It
-contains exactly the 33 source files, flattened, with `main.tex` first, then the
-sections, `main.bbl`, `references.bib`, the 12 tables, and the 11 figures. EM
-unpacks it and shows the files in that order. If EM rejects the archive, upload
-the same 33 files individually from `submission/flat/`.
+The upload step lists three **required** items:
 
-Item types after unpacking:
+| Required item | What to upload |
+|---|---|
+| Abstract | `submission/abstract.docx` (fallback: `submission/abstract.pdf`) |
+| Manuscript | `submission/main.pdf` — the compiled 20-page proof |
+| Declaration of competing interests | tick "I confirm that no authors … have any competing … interests"; the badge turns **Confirmed**. Only upload the declarations-tool `.docx` if the journal asks for a file |
 
-| Order | File(s) | Item type |
-|---|---|---|
-| 1 | `main.tex` | Manuscript |
-| 2–8 | `abstract.tex`, `introduction.tex`, `related_work.tex`, `methodology.tex`, `experiments.tex`, `conclusion.tex`, `declarations.tex` | Manuscript |
-| 9–10 | `main.bbl`, `references.bib` | Manuscript |
-| 11–22 | `tab_*.tex` (12) | Table |
-| 23–33 | `fig_*.pdf` (11) | Figure |
-| — | `submission/cover_letter.pdf` | Cover Letter |
-| — | `submission/highlights.docx` | Highlights |
-| — | `submission/SCORE-Net_supplementary.pdf` | Supplementary Material |
-| — | declarations tool `.docx` | Declaration of Interest |
+Then set **"Tell us the format of your manuscript" → LaTeX**. The service says
+"Upload a .zip and a compiled .pdf", so a second slot appears:
 
-`main.tex` **must** be first in the order list, and no LaTeX file may be given
-the Supplementary item type (that breaks the PDF build). `main.pdf`,
-`main.aux`, `main.log`, `main.spl` and `main.blg` are build artifacts and are
-**not** uploaded.
+| Item | What to upload |
+|---|---|
+| LaTeX source files | `submission/SCORE-Net_submission.zip` (33 files, flat, `main.tex` first) |
 
-Finally, **build the PDF in Editorial Manager and proofread it** against
-`main.pdf`: same 20 pages, figures present, no `??` citations, no error-log PDF.
-A LaTeX compile error in EM produces an error log instead of a PDF, so a quick
-look at the first page is enough to confirm the build worked.
+Optional / supplementary slots (upload if the dropdown offers them):
+
+| File | Item type |
+|---|---|
+| `submission/cover_letter.pdf` | Cover letter |
+| `submission/highlights.docx` | Highlights |
+| `submission/SCORE-Net_supplementary.pdf` | Supplementary material |
+
+Do **not** upload the individual figures, tables or `.tex` sections — they are
+already inside `main.pdf` and inside the source zip. Do not upload build
+artifacts (`main.aux`, `.log`, `.spl`, `.blg`).
+
+The service extracts title, abstract, keywords and authors from `main.pdf`;
+check every extracted field on the following screens against the manuscript.
+File-name rules enforced by the service: at most 64 characters, no
+`% < > : " / \ | ? *`, no duplicate names, no `docm/dotm/exe/bat/pptm/xlsm/ps1`.
+
+Finally, **proofread the generated PDF**: 20 pages, figures present, no `??`
+citations, data availability line with `zenodo.24217263`.
 
 ---
 
