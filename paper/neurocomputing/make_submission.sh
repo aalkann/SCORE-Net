@@ -66,20 +66,28 @@ cp supplementary.pdf "submission/SCORE-Net_supplementary.pdf"
 supp_pages=$(grep -oE "Output written on supplementary.pdf \([0-9]+ page" suppbuild.log | grep -oE "[0-9]+" | tail -1 || true)
 echo "    supplementary OK (${supp_pages:-?} pages)"
 
-echo "==> [5/5] zipping"
-( cd "$FLAT" && zip -q -r "../$(basename "$OUT")" . -x '*.aux' '*.log' '*.out' '*.fls' '*.fdb_latexmk' '*.synctex.gz' 'main.pdf' )
+echo "==> [5/5] zipping the LaTeX source in Editorial Manager order"
+# Exactly the 33 source files, flat, with main.tex first: EM compiles the first
+# .tex file, so the order in the archive is the order EM shows at Attach Files.
+( cd "$FLAT" && {
+      printf '%s\n' main.tex abstract.tex introduction.tex related_work.tex \
+                    methodology.tex experiments.tex conclusion.tex declarations.tex \
+                    main.bbl references.bib
+      ls tab_*.tex
+      ls fig_*.pdf
+  } > .zip_order.txt
+  zip -q -X "../$(basename "$OUT")" -@ < .zip_order.txt
+  rm -f .zip_order.txt )
 
 # The proof PDF, the supplementary PDF and the non-source artifacts are
 # uploaded separately.
 cp "$FLAT/main.pdf" "submission/SCORE-Net_proof.pdf" 2>/dev/null || true
 
-echo "    wrote $OUT"
+echo "    wrote $OUT ($(unzip -l "$OUT" | tail -1 | awk '{print $2}') files)"
 echo
 echo "Upload order (Editorial Manager):"
 echo "  1 Cover Letter       submission/cover_letter.pdf"
-echo "  2 Manuscript         main.tex, main.bbl, references.bib"
-echo "  3 Table              tab_*.tex"
-echo "  4 Figure             fig_*.pdf"
-echo "  5 Highlights         submission/highlights.docx (or highlights.txt)"
-echo "  6 Supplementary      submission/SCORE-Net_supplementary.pdf"
-echo "  7 Declaration        Editorial Manager web form (no file is uploaded)"
+echo "  2 LaTeX source       submission/SCORE-Net_submission.zip  (main.tex first)"
+echo "  3 Highlights         submission/highlights.docx (or highlights.txt)"
+echo "  4 Supplementary      submission/SCORE-Net_supplementary.pdf"
+echo "  5 Declaration        declarations.elsevier.com .docx (Declaration of Interest)"
