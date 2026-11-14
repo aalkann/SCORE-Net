@@ -1,4 +1,5 @@
 cff-version: 1.2.0
+type: software
 message: "If you use this code, please cite the article below."
 title: "SCORE-Net: Inherently Interpretable Tabular Classification via Localized Convex Slabs"
 abstract: >-
@@ -22,7 +23,7 @@ authors:
     orcid: "https://orcid.org/0000-0002-7841-2131"
 license: MIT
 version: 1.0.0
-date-released: "2026-10-29"
+date-released: "2026-11-14"
 keywords:
   - interpretable machine learning
   - explainable artificial intelligence
