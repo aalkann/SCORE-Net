@@ -8,11 +8,17 @@ Text as it appears in `sections/declarations.tex`:
 > so the data can be reproduced exactly. The code, the trained checkpoints, and
 > the scripts that regenerate every table and figure in this article are openly
 > available at https://github.com/aalkann/SCORE-Net (archived at
-> https://doi.org/10.5281/zenodo.24217264).
+> https://doi.org/10.5281/zenodo.24217263).
 
-Version DOI (release `v1.0.0`, use this in the paper):
-`10.5281/zenodo.24217264` — concept DOI (all versions):
-`10.5281/zenodo.24217263`.
+The statement cites the **concept DOI** `10.5281/zenodo.24217263`, which always
+resolves to the newest archived release. The version DOI of the release that
+matches the manuscript at submission time is `10.5281/zenodo.24217264`
+(`v1.0.0`); later releases keep the same concept DOI.
+
+Why the concept DOI: a version DOI is an immutable snapshot, and the snapshot
+cannot contain the DOI it is being assigned (the DOI is minted at publish time).
+Citing the concept DOI keeps the link inside the article consistent with the
+archive it opens, and it stays correct when a new release is published.
 
 ---
 

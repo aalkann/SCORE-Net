@@ -22,12 +22,12 @@ authors:
     email: gyolcu@sakarya.edu.tr
     orcid: "https://orcid.org/0000-0002-7841-2131"
 license: MIT
-version: 1.0.0
+version: 1.0.1
 date-released: "2026-11-14"
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.24217264
-    description: "Archived release v1.0.0"
+    value: 10.5281/zenodo.24217263
+    description: "Concept DOI (always resolves to the newest release)"
 keywords:
   - interpretable machine learning
   - explainable artificial intelligence

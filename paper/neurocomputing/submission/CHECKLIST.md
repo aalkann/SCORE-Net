@@ -45,9 +45,11 @@ Sources for every item below are listed in `README.md` under
 - [x] **Repository public.** The URL is in `sections/declarations.tex`
       (`https://github.com/aalkann/SCORE-Net`) and the repository is **public**
       (verified, HTTP 200), so reviewers can open it.
-- [x] **Zenodo DOI.** Release `v1.0.0` is archived at
-      `https://doi.org/10.5281/zenodo.24217264` (concept DOI for all versions:
-      `10.5281/zenodo.24217263`); it is cited in the data availability statement.
+- [x] **Zenodo DOI.** The data availability statement cites the **concept DOI**
+      `https://doi.org/10.5281/zenodo.24217263`, which always resolves to the
+      newest archived release. The version DOI of `v1.0.0` is
+      `10.5281/zenodo.24217264`; `v1.0.1` is the release archived from the
+      submission commit.
 - [ ] **Competing interests.** The Guide for Authors says the
       [declarations tool](https://declarations.elsevier.com/) "should always be
       completed": answer the yes/no questions, pick "I have nothing to declare"
@@ -97,7 +99,7 @@ build is clean (0 errors, 0 overfull boxes, 0 undefined references).
 | Figure type size ≥6 pt at printed size | done (all 11 pass `audit_figures.py`) |
 | CRediT author contribution statement | done |
 | Declaration of competing interest | text done; `.docx` from the declarations tool uploaded at submission |
-| Data availability statement | text + repository URL + Zenodo DOI `10.5281/zenodo.24217264` |
+| Data availability statement | text + repository URL + concept DOI `10.5281/zenodo.24217263` |
 | Declaration of generative AI use | done |
 | No subfolders in the submission archive | see §5 |
 

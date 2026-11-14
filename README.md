@@ -274,5 +274,6 @@ These are stated in the manuscript as well:
 
 MIT — see `LICENSE`. Citation metadata in `CITATION.cff`.
 
-Archived release `v1.0.0`: [10.5281/zenodo.24217264](https://doi.org/10.5281/zenodo.24217264)
-(all versions: [10.5281/zenodo.24217263](https://doi.org/10.5281/zenodo.24217263)).
+Archived on Zenodo (concept DOI, always the newest release):
+[10.5281/zenodo.24217263](https://doi.org/10.5281/zenodo.24217263).
+Version DOI of `v1.0.0`: [10.5281/zenodo.24217264](https://doi.org/10.5281/zenodo.24217264).
