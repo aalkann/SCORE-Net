@@ -22,3 +22,4 @@ submission/flat/
 
 # Derived table copies: regenerate with prepare_tables.py, never edit by hand
 # generated/*.tex
+*.spl
