@@ -8,7 +8,7 @@ abstract: >-
   pruning pipeline, exact bias shifting for pruned rules, rule-level integer
   quantization, the analytical interpretability tools, and every script and
   notebook that regenerates the tables and figures of the manuscript.
-repository-code: "https://github.com/aalkann/XAI-Simple-Rule-Learner-SCORENet"
+repository-code: "https://github.com/aalkann/SCORE-Net"
 authors:
   - family-names: Alkan
     given-names: Ahmet

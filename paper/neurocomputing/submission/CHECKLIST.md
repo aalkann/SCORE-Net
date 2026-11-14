@@ -41,12 +41,10 @@ Sources for every item below are listed in `README.md` under
 - [x] **ORCID iDs.** Both are printed on the title page as footnotes:
       Ahmet Alkan `0009-0006-4919-8080`, Gozde Yolcu Oztel `0000-0002-7841-2131`.
       Enter the same iDs in Editorial Manager for each author record.
-- [ ] **Repository public.** The URL is already in `sections/declarations.tex`
-      (`https://github.com/aalkann/XAI-Simple-Rule-Learner-SCORENet`) but the
-      repository is currently **private**. Flip it to public **before** the
-      submission is completed — reviewers must be able to open it, and
-      `./build.sh` prints a warning until it is reachable. A Zenodo DOI is
-      optional but preferred; see `submission/data_availability.md`.
+- [x] **Repository public.** The URL is in `sections/declarations.tex`
+      (`https://github.com/aalkann/SCORE-Net`) and the repository is **public**
+      (verified, HTTP 200), so reviewers can open it. A Zenodo DOI is optional
+      but preferred; see `submission/data_availability.md`.
 - [ ] **Competing interests.** Complete this **inside Editorial Manager** at the
       "Declarations" step: you are asked a set of yes/no questions about
       financial and personal relationships, and you pick "I have nothing to
