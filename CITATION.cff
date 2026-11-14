@@ -24,6 +24,10 @@ authors:
 license: MIT
 version: 1.0.0
 date-released: "2026-11-14"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24217264
+    description: "Archived release v1.0.0"
 keywords:
   - interpretable machine learning
   - explainable artificial intelligence

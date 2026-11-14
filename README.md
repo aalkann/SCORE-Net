@@ -273,3 +273,6 @@ These are stated in the manuscript as well:
 ## Licence and citation
 
 MIT — see `LICENSE`. Citation metadata in `CITATION.cff`.
+
+Archived release `v1.0.0`: [10.5281/zenodo.24217264](https://doi.org/10.5281/zenodo.24217264)
+(all versions: [10.5281/zenodo.24217263](https://doi.org/10.5281/zenodo.24217263)).
